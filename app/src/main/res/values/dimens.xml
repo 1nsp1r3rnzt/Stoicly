@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_small_8">8dp</dimen>
+    <dimen name="margin_medium_16">16dp</dimen>
+    <dimen name="image_height_max_80">80dp</dimen>
+    <dimen name="size_medium">16dp</dimen>
+    <dimen name="material_design_spacing">2dp</dimen>
+    <dimen name="margin_medium_24">24dp</dimen>
+</resources>

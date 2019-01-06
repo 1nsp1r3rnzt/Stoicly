@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.quote.QuoteActivity">
+
+    <include layout="@layout/item_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/ll_author_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_small_8">
+
+        <ImageView
+            android:id="@+id/iv_random_author_thumbnail"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+
+        <TextView
+            android:id="@+id/tv_random_author_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small_8"
+            android:layout_marginTop="@dimen/margin_medium_16"
+            android:text="@string/demo_author_name" />
+
+    </LinearLayout>
+
+    <include layout="@layout/item_quote_rv" />
+</android.support.constraint.ConstraintLayout>

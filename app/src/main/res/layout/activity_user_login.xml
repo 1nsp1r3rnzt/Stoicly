@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.user.UserActivity">
+
+    <ImageView
+        android:id="@+id/iv_user_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:backgroundTint="@color/colorBlack"
+        android:backgroundTintMode="multiply"
+        android:contentDescription="@String/image_user_background_description" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_medium"
+        android:layout_marginStart="@dimen/margin_medium_16"
+        android:layout_marginBottom="@dimen/margin_medium_16"
+        android:background="@color/colorRed"
+        android:text="@string/user_login_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_user_login_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_skip_login_link"
+
+
+        />
+
+
+</android.support.constraint.ConstraintLayout>
