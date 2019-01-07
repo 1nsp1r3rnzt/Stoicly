@@ -57,7 +57,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 //        image Uri
 //        viewHolder.authorPictureImageView.setImageURI(());
         viewHolder.quoteTextView.setText(currentQuote.getQuote());
-        viewHolder.listId = filteredQuoteAuthorJoinList.indexOf(currentQuote);
+        viewHolder.quote = currentQuote;
         Timber.d("%s", filteredQuoteAuthorJoinList.indexOf(currentQuote));
         bindFavouriteIcon(viewHolder, position);
     }
@@ -129,16 +129,17 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
         this.listener = onItemClickListener;
     }
 
+
     public interface OnItemClickListener {
-        void onItemClick(Bundle bundle);
+        void onItemClick(QuoteAuthorJoin quote, int position, int resourceId);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView    quoteTextView;
-        TextView    authorNameTextView;
-        ImageView   authorPictureImageView;
-        ImageButton isFavouriteButton;
-        int         listId;
+        TextView        quoteTextView;
+        TextView        authorNameTextView;
+        ImageView       authorPictureImageView;
+        ImageButton     isFavouriteButton;
+        QuoteAuthorJoin quote;
 
         ViewHolder(@NonNull View itemView) {
             //the itemView is of individual Row
@@ -150,6 +151,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
             authorNameTextView = itemView.findViewById(R.id.tvAuthorName);
             isFavouriteButton = itemView.findViewById(R.id.btn_quote_favourite);
             Group group = itemView.findViewById(R.id.group_buttons);
+
             int ids[] = group.getReferencedIds();
 
             Bundle bundle = new Bundle();
@@ -165,10 +167,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
                         // check for the position
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            bundle.putInt(KEY_LIST_POSITION, listId);
-                            bundle.putInt(KEY_ADAPTER_POSITION, position);
-                            bundle.putInt(KEY_RESOURCE_ID, resourceId);
-                            listener.onItemClick(bundle);
+                            listener.onItemClick(quote, position, resourceId);
 
                         }
                     }

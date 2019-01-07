@@ -22,7 +22,6 @@ import java.util.List;
 
 import codehealthy.com.stoicly.R;
 import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
-import timber.log.Timber;
 
 public class QuoteActivity extends AppCompatActivity {
     QuoteViewModel        quoteViewModel;
@@ -117,28 +116,21 @@ public class QuoteActivity extends AppCompatActivity {
         quoteRowView.setAdapter(quoteAdapter);
         quoteRowView.setLayoutManager(new LinearLayoutManager(this));
 
-        quoteAdapter.setOnItemClickListener((Bundle bundle) -> {
-            int listPosition = bundle.getInt(QuoteAdapter.KEY_LIST_POSITION);
-            int adapterPosition = bundle.getInt(QuoteAdapter.KEY_ADAPTER_POSITION);
-            int resourceId = bundle.getInt(QuoteAdapter.KEY_RESOURCE_ID);
-
-            Timber.d("Id recievied %s and list id is %s", quoteList.get(listPosition).getQuote(), adapterPosition);
+        quoteAdapter.setOnItemClickListener((quote, position, resourceId) -> {
 
             switch (resourceId) {
                 case R.id.btn_quote_favourite:
-                    updateFavouriteQuote(listPosition);
-                    notifyAdapterDataChanged(adapterPosition);
+                    updateFavouriteQuote(quote);
+                    notifyAdapterDataChanged(position);
                     break;
                 case R.id.btn_quote_share:
-                    shareQuote(listPosition);
+                    shareQuote(position);
                     break;
                 case R.id.btn_quote_clipboard:
-                    copyToClipboard(listPosition);
+                    copyToClipboard(position);
                     break;
             }
-
         });
-
     }
 
     private void copyToClipboard(int position) {
@@ -166,12 +158,12 @@ public class QuoteActivity extends AppCompatActivity {
         return quoteList.get(position);
     }
 
-    private void updateFavouriteQuote(int position) {
-        QuoteAuthorJoin quote = quoteList.get(position);
+    private void updateFavouriteQuote(QuoteAuthorJoin quote) {
+        int currentQuoteIndex = quoteList.indexOf(quote);
         if (quote.isFavourite()) quote.setFavourite(false);
         else quote.setFavourite(true);
 
-        quoteList.set(position, quote);
+        quoteList.set(currentQuoteIndex, quote);
         quoteViewModel.updateQuote(quote);
     }
 
@@ -183,3 +175,4 @@ public class QuoteActivity extends AppCompatActivity {
 
 
 }
+
