@@ -7,6 +7,7 @@
     android:layout_marginStart="@dimen/margin_small_8"
     android:layout_marginTop="@dimen/margin_small_8"
     android:layout_marginBottom="@dimen/margin_small_8"
+    android:layout_marginEnd="@dimen/margin_small_8"
     android:elevation="6dp"
     android:orientation="horizontal">
 

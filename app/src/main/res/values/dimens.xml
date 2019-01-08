@@ -6,4 +6,5 @@
     <dimen name="size_medium">16dp</dimen>
     <dimen name="material_design_spacing">2dp</dimen>
     <dimen name="margin_medium_24">24dp</dimen>
+    <dimen name="text_size_medium_16">16sp</dimen>
 </resources>

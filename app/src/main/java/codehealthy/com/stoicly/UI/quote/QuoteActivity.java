@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.Collections;
 import java.util.List;
 
 import codehealthy.com.stoicly.R;
@@ -29,24 +31,38 @@ public class QuoteActivity extends AppCompatActivity {
     QuoteAdapter          quoteAdapter;
     RecyclerView          quoteRowView;
     private SwipeRefreshLayout swipeContainer;
+    private Handler            handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote);
         setToolbar();
-        setUpSwipeRefresh();
+        setUpSwipeRefreshListener();
         quoteViewModel = ViewModelProviders.of(this).get(QuoteViewModel.class);
         quoteRowView = findViewById(R.id.rv_quote);
         getQuotesFromQuoteViewModel();
 
     }
 
-    private void setUpSwipeRefresh() {
-        swipeContainer = findViewById(R.id.sl_quote);
-        swipeContainer.setOnRefreshListener(() -> {
-            quoteAdapter.notifyDataSetChanged();
-        });
+    private void setUpSwipeRefreshListener() {
+        swipeContainer = findViewById(R.id.swipe_refresh_quote);
+        swipeContainer.setOnRefreshListener(() ->
+                getHandler().post(this::refreshAllQuotes));
+    }
+
+    private Handler getHandler() {
+        if (handler == null) {
+            handler = new Handler();
+        }
+        return handler;
+    }
+
+    private void refreshAllQuotes() {
+        Collections.shuffle(quoteList);
+        quoteAdapter.notifyDataSetChanged();
+        swipeContainer.setRefreshing(false);
+
     }
 
     @Override
@@ -121,7 +137,7 @@ public class QuoteActivity extends AppCompatActivity {
             switch (resourceId) {
                 case R.id.btn_quote_favourite:
                     updateFavouriteQuote(quote);
-                    notifyAdapterDataChanged(position);
+                    notifyAdapterPositionChanged(position);
                     break;
                 case R.id.btn_quote_share:
                     shareQuote(position);
@@ -167,7 +183,7 @@ public class QuoteActivity extends AppCompatActivity {
         quoteViewModel.updateQuote(quote);
     }
 
-    private void notifyAdapterDataChanged(int adapterPosition) {
+    private void notifyAdapterPositionChanged(int adapterPosition) {
         if (quoteAdapter != null) {
             quoteAdapter.notifyItemChanged(adapterPosition);
         }

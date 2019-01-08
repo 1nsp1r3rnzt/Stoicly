@@ -24,9 +24,6 @@ import timber.log.Timber;
 // 1. Create a class which extends RecyclerView<T>
 // ViewHolder gives access to custom view
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> implements Filterable {
-    public static final String                KEY_LIST_POSITION    = "KEY_LIST_POSITION";
-    public static final String                KEY_ADAPTER_POSITION = "KEY_ADAPTER_POSITION";
-    public static final String                KEY_RESOURCE_ID      = "KEY_RESOURCE_ID";
     private             OnItemClickListener   listener;
     private             List<QuoteAuthorJoin> quoteAuthorJoinList;
     private             List<QuoteAuthorJoin> filteredQuoteAuthorJoinList;
@@ -128,7 +125,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.listener = onItemClickListener;
     }
-
 
     public interface OnItemClickListener {
         void onItemClick(QuoteAuthorJoin quote, int position, int resourceId);

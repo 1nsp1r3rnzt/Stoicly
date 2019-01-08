@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="demo_quote_description">There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..</string>
+    <string name="demo_author_name">Demi Latavo</string>
+    <string name="demo_author_bio_description"> He was born a slave at Hierapolis, Phrygia (present day Pamukkale, Turkey) and lived in Rome until his banishment, when he went to Nicopolis in northwestern Greece for the rest of his life. His teachings were written down and published by his pupil Arrian in his Discourses and Enchiridion.
+    </string>
+    <string name="demo_author_wikipedia_link"><a href="https://wikipedia.com">More..</a></string>
+</resources>
