@@ -18,10 +18,7 @@ import java.util.List;
 
 import codehealthy.com.stoicly.R;
 import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
-import timber.log.Timber;
 
-// 1. Create a class which extends RecyclerView<T>
-// ViewHolder gives access to custom view
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> implements Filterable {
     private OnItemClickListener   listener;
     private List<QuoteAuthorJoin> quoteAuthorJoinList;
@@ -36,9 +33,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     @NonNull
     @Override
     public QuoteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-//        oncreateviewholder inflates the itemlayout and creates the holder
-//        we need context to access the correct resources
-//        we need to inflate the xml code here
         Context context = viewGroup.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View customRowView = layoutInflater.inflate(R.layout.item_quote_row, viewGroup, false);
@@ -47,32 +41,25 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull QuoteAdapter.ViewHolder viewHolder, int position) {
-//        set the viwewAttribute based on data
         position = viewHolder.getAdapterPosition();
         QuoteAuthorJoin currentQuote = filteredQuoteAuthorJoinList.get(position);
         viewHolder.authorNameTextView.setText(currentQuote.getAuthorName());
-//        viewHolder.authorPictureImageView.setImageResource(currentQuote.getAuthorId());
-//        image Uri
-//        viewHolder.authorPictureImageView.setImageURI(());
         viewHolder.quoteTextView.setText(currentQuote.getQuote());
         viewHolder.quote = currentQuote;
-        Timber.d("%s", filteredQuoteAuthorJoinList.indexOf(currentQuote));
         bindFavouriteIcon(viewHolder, position);
     }
 
     private void bindFavouriteIcon(ViewHolder viewHolder, int position) {
         QuoteAuthorJoin currentQuote = filteredQuoteAuthorJoinList.get(position);
-//        Timber.d("id:%s Fav:%s position:%s", currentQuote.getId(), currentQuote.getQuoteStatus().isFavourite(), position);
         if (currentQuote.getQuoteStatus().isFavourite()) {
-//            Timber.d("setting is favourite icon true for%s", currentQuote.getQuote());
             viewHolder.isFavouriteButton.setImageResource(R.drawable.ic_favorite_black_24dp);
 
         } else {
-            Timber.d("setting is favourite icon False for%s", currentQuote.getQuote());
             viewHolder.isFavouriteButton.setImageResource(R.drawable.ic_favorite_border_black_24dp);
 
         }
     }
+
     @Override
     public int getItemCount() {
         return filteredQuoteAuthorJoinList.size();
@@ -83,9 +70,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                // if the filter result is empty then orignal list should be returned
                 String query = constraint.toString();
-                // search through the list
 
                 List<QuoteAuthorJoin> filteredList = new ArrayList<QuoteAuthorJoin>();
                 if (query.isEmpty()) {

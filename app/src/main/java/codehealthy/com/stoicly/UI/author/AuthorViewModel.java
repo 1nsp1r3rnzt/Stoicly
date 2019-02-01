@@ -21,14 +21,14 @@ import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
 public class AuthorViewModel extends AndroidViewModel {
     private AuthorRepository                authorRepository;
     private LiveData<List<QuoteAuthorJoin>> allQuoteByAuthorList;
-    private LiveData<Author> author;
-    private int authorId;
-    private int numberOfAuthorQuotes;
+    private LiveData<Author>                author;
+    private int                             authorId;
+    private int                             numberOfAuthorQuotes;
 
     public AuthorViewModel(@NonNull Application application, int authorId) {
         super(application);
         authorRepository = new AuthorRepositoryImpl(application, authorId);
-        this.authorId   = authorId;
+        this.authorId = authorId;
         this.author = authorRepository.getAuthorById(authorId);
         this.allQuoteByAuthorList = authorRepository.getAllQuotesByAuthor(authorId);
     }

@@ -3,7 +3,6 @@ package codehealthy.com.stoicly.UI.quote;
 import android.app.SearchManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,6 +38,7 @@ public class QuoteFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     private Handler            handler;
     private Context            context;
+    private OnFragmentInteractionListener listener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +50,14 @@ public class QuoteFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if(context instanceof OnFragmentInteractionListener)
+        {
+        listener = (OnFragmentInteractionListener) context;
+        }
+        else
+        {
+            throw new ClassCastException("Activity must implement OnFragentInteractionListener");
+        }
         this.context = context;
     }
 
@@ -81,6 +88,7 @@ public class QuoteFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         this.context = null;
+        this.listener = null;
     }
 
 
@@ -91,9 +99,7 @@ public class QuoteFragment extends Fragment {
         SearchManager searchManager = (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) searchAction.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(Objects.requireNonNull(getActivity()).getComponentName()));
-
         searchView.setMaxWidth(Integer.MAX_VALUE);
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -177,40 +183,25 @@ public class QuoteFragment extends Fragment {
                     notifyAdapterPositionChanged(position);
                     break;
                 case R.id.btn_quote_share:
-                    shareQuoteByIntent(position);
+                    String authorName = getQuoteAt(position).getAuthorName();
+                    String quoteText = getQuoteAt(position).getQuote();
+                    listener.onShareByIntentListener(authorName+"\n"+quoteText,"Share Quote via");
                     break;
                 case R.id.btn_quote_clipboard:
-                    copyToClipboard(position);
+                    ClipData clipData  = ClipData.newPlainText("quote", quote.getQuote() + "\n" + quote.getAuthorName());
+                    listener.onCopyToClipboardListener(clipData);
                     break;
                 case R.id.ivAuthorThumbnail:
-
                     break;
 
             }
         });
     }
 
-    private void copyToClipboard(int position) {
-        ClipboardManager clipboardManager = (ClipboardManager) Objects.requireNonNull(getActivity()).getSystemService(Context.CLIPBOARD_SERVICE);
-        QuoteAuthorJoin quote = getQuoteAt(position);
-        ClipData clipData = ClipData.newPlainText("quote", quote.getQuote() + "\n" + quote.getAuthorName());
-        clipboardManager.setPrimaryClip(clipData);
-        Toast.makeText(context, getString(R.string.description_clipboard_data_copy), Toast.LENGTH_SHORT).show();
-    }
-
-    private void shareQuoteByIntent(int position) {
-        String authorName = getQuoteAt(position).getAuthorName();
-        String quoteText = getQuoteAt(position).getQuote();
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("plain/text");
-        intent.putExtra(Intent.EXTRA_TEXT, quoteText + "\n" + authorName);
-        Intent chooser = Intent.createChooser(intent, "Share quote to");
-        startActivity(chooser);
-    }
-
     private QuoteAuthorJoin getQuoteAt(int position) {
         return quoteList.get(position);
     }
+
 
     private void updateFavouriteQuote(QuoteAuthorJoin quote) {
         int currentQuoteIndex = quoteList.indexOf(quote);
@@ -222,4 +213,11 @@ public class QuoteFragment extends Fragment {
     private void notifyAdapterPositionChanged(int adapterPosition) {
         if (quoteAdapter != null) quoteAdapter.notifyItemChanged(adapterPosition);
     }
+
+
+    interface OnFragmentInteractionListener{
+        void onShareByIntentListener(String text, String chooserTitle);
+        void onCopyToClipboardListener(ClipData clipData);
+    }
 }
+

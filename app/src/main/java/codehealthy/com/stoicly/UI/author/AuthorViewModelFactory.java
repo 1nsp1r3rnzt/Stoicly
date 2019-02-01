@@ -6,8 +6,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 public class AuthorViewModelFactory implements ViewModelProvider.Factory {
-    //    view model needs application context.
-//    passing author id as parameter
+
     private Application application;
     private int         param;
 
