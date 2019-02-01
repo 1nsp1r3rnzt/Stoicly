@@ -12,6 +12,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import codehealthy.com.stoicly.data.model.Author;
+import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
 
 @Dao
 public interface AuthorDao {
@@ -25,6 +26,9 @@ public interface AuthorDao {
 
     @Query("Select * from Author")
     LiveData<List<Author>> getAllAuthors();
+
+    @Query("SELECT  quote.*,author.name as author_name, author.thumbnailUrl as thumbnail_url from quote quote LEFT JOIN author Where author_id=:authorId ORDER BY RANDOM()")
+    LiveData<List<QuoteAuthorJoin>> getAllQuotesByAuthor(int authorId);
 
     @Insert
     void insertAuthor(Author... author);

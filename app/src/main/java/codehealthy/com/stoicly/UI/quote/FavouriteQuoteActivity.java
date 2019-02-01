@@ -8,6 +8,8 @@
 
 package codehealthy.com.stoicly.UI.quote;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import android.widget.Toolbar;
 import java.util.List;
 
 import codehealthy.com.stoicly.R;
+import codehealthy.com.stoicly.UI.author.AuthorViewModel;
 import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
 
 
@@ -29,6 +32,10 @@ public class FavouriteQuoteActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote_favourite);
+        AuthorViewModel authorViewModel = ViewModelProviders.of(this).get(AuthorViewModel.class);
+//        we pass current activity as lifecycle owner in observe method
+        authorViewModel.getAllQuoteByAuthorList().observe(this, quotes->{
 
+        });
     }
 }

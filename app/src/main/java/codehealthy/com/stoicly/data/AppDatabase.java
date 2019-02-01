@@ -8,27 +8,25 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import codehealthy.com.stoicly.UI.common.utility.MyHelper;
 import codehealthy.com.stoicly.data.model.Author;
 import codehealthy.com.stoicly.data.model.Quote;
 import codehealthy.com.stoicly.data.model.QuoteGroup;
 import codehealthy.com.stoicly.data.model.User;
 import codehealthy.com.stoicly.data.source.local.AuthorDao;
+import codehealthy.com.stoicly.data.source.local.AuthorJsonHelper;
+import codehealthy.com.stoicly.data.source.local.QuoteJsonHelper;
 import codehealthy.com.stoicly.data.source.local.QuoteDao;
-import codehealthy.com.stoicly.data.source.local.QuoteData;
 import codehealthy.com.stoicly.data.source.local.QuoteGroupDao;
 import codehealthy.com.stoicly.data.source.local.UserDao;
 import timber.log.Timber;
 
-@Database(entities = {Quote.class, Author.class, User.class, QuoteGroup.class}, version = 3)
+@Database(entities = {Quote.class, Author.class, User.class, QuoteGroup.class}, version = 4)
 public abstract class AppDatabase extends RoomDatabase {
-    private final static String      TAG = QuoteRepositoryImpl.class.getSimpleName();
-    private static       AppDatabase INSTANCE;
-    private static       MyHelper    context;
-
+    private static      AppDatabase INSTANCE;
+    private static final String      QUOTES_JSON_RESOURCE_NAME = "quotes.json";
+    private static final String AUTHORS_JSON_RESOURCE_NAME = "authors.json";
     public AppDatabase() {
     }
 
@@ -42,8 +40,8 @@ public abstract class AppDatabase extends RoomDatabase {
                                      public void onCreate(@NonNull SupportSQLiteDatabase db) {
                                          super.onCreate(db);
 //            load database with data on creation of the database schema
-                                         loadQuotesDatabase(context);
-                                         loadAuthorsDatabase(context);
+                                         populateQuotesDatabase(context);
+                                         populateAuthorsDatabase(context);
                                      }
                                  }
                     )
@@ -54,16 +52,17 @@ public abstract class AppDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    private static void loadQuotesDatabase(@NonNull Context context) {
+    private static void populateQuotesDatabase(@NonNull Context context) {
 
-        List<Quote> quotesData = new QuoteData(context).getQuotesData();
-
+        List<Quote> quotesData;
+        quotesData = new QuoteJsonHelper(context).getListFrom(QUOTES_JSON_RESOURCE_NAME);
         new PopulateQuoteDatabaseAsyncTask(INSTANCE, quotesData).execute();
     }
 
-    private static void loadAuthorsDatabase(@NonNull Context context) {
-        List<Author> authorList = new ArrayList<>();
-        authorList.add(new Author("epictectus", "", "hellova", "12-12-1200", "12-12-1200", "philosopher"));
+    private static void populateAuthorsDatabase(@NonNull Context context) {
+        List<Author> authorList;
+        authorList = new AuthorJsonHelper(context).getListFrom(AUTHORS_JSON_RESOURCE_NAME);
+
         new PopulateAuthorDatabaseAsyncTask(INSTANCE, authorList).execute();
     }
 

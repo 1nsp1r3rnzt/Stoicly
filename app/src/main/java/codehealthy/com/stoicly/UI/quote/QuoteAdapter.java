@@ -1,7 +1,6 @@
 package codehealthy.com.stoicly.UI.quote;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.Group;
 import android.support.v7.widget.RecyclerView;
@@ -24,13 +23,14 @@ import timber.log.Timber;
 // 1. Create a class which extends RecyclerView<T>
 // ViewHolder gives access to custom view
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> implements Filterable {
-    private             OnItemClickListener   listener;
-    private             List<QuoteAuthorJoin> quoteAuthorJoinList;
-    private             List<QuoteAuthorJoin> filteredQuoteAuthorJoinList;
+    private OnItemClickListener   listener;
+    private List<QuoteAuthorJoin> quoteAuthorJoinList;
+    private List<QuoteAuthorJoin> filteredQuoteAuthorJoinList;
 
     QuoteAdapter(List<QuoteAuthorJoin> quoteAuthorJoinList) {
         this.quoteAuthorJoinList = quoteAuthorJoinList;
         this.filteredQuoteAuthorJoinList = quoteAuthorJoinList;
+
     }
 
     @NonNull
@@ -51,6 +51,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
         position = viewHolder.getAdapterPosition();
         QuoteAuthorJoin currentQuote = filteredQuoteAuthorJoinList.get(position);
         viewHolder.authorNameTextView.setText(currentQuote.getAuthorName());
+//        viewHolder.authorPictureImageView.setImageResource(currentQuote.getAuthorId());
 //        image Uri
 //        viewHolder.authorPictureImageView.setImageURI(());
         viewHolder.quoteTextView.setText(currentQuote.getQuote());
@@ -61,9 +62,9 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
     private void bindFavouriteIcon(ViewHolder viewHolder, int position) {
         QuoteAuthorJoin currentQuote = filteredQuoteAuthorJoinList.get(position);
-        Timber.d("id:%s Fav:%s position:%s", currentQuote.getId(), currentQuote.isFavourite(), position);
-        if (currentQuote.isFavourite()) {
-            Timber.d("setting is favourite icon true for%s", currentQuote.getQuote());
+//        Timber.d("id:%s Fav:%s position:%s", currentQuote.getId(), currentQuote.getQuoteStatus().isFavourite(), position);
+        if (currentQuote.getQuoteStatus().isFavourite()) {
+//            Timber.d("setting is favourite icon true for%s", currentQuote.getQuote());
             viewHolder.isFavouriteButton.setImageResource(R.drawable.ic_favorite_black_24dp);
 
         } else {
@@ -72,8 +73,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
         }
     }
-
-
     @Override
     public int getItemCount() {
         return filteredQuoteAuthorJoinList.size();
@@ -99,8 +98,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
                         ))) {
                             filteredList.add(quote);
                         }
-
-
                     }
                 }
                 FilterResults results = new FilterResults();
@@ -150,7 +147,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
             int ids[] = group.getReferencedIds();
 
-            Bundle bundle = new Bundle();
             for (int resourceId : ids) {
 
                 //lambda function overwrite the OnClickListener

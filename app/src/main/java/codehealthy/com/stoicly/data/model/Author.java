@@ -30,6 +30,9 @@ public class Author {
     @ColumnInfo(name = "profession")
     private String profession;
 
+    @ColumnInfo(name = "bio_link")
+    private String bioLink;
+
 
     public Author(String name, String thumbnailUrl, String bio, String dateBorn, String dateDied, String profession) {
         this.name = MyHelper.capitalize(name);
@@ -70,5 +73,13 @@ public class Author {
 
     public String getProfession() {
         return profession;
+    }
+
+    public String getBioLink() {
+        return bioLink;
+    }
+
+    public void setBioLink(String bioLink) {
+        this.bioLink = bioLink;
     }
 }

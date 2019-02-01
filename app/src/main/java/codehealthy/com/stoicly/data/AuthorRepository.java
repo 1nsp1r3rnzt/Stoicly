@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import java.util.List;
 
 import codehealthy.com.stoicly.data.model.Author;
+import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
 
 public interface AuthorRepository {
     LiveData<List<Author>> getAllAuthors();
@@ -16,7 +17,11 @@ public interface AuthorRepository {
     void deleteAuthor(Author author);
 
     void getAuthorByName(String authorName);
+    void getAuthor(int AuthorId);
 
-    void getAuthorById(int authorId);
+    LiveData<List<QuoteAuthorJoin>> getAllQuotesByAuthor(int authorId);
+
+    LiveData<Author> getAuthorById(int authorId);
+
 }
 

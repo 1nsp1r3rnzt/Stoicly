@@ -13,14 +13,13 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".UI.quote.QuoteActivity">
+        <activity android:name=".UI.quote.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.author.AuthorActivity" />
         <activity android:name=".UI.user.UserActivity" />
         <activity android:name=".UI.quote.FavouriteQuoteActivity" />
     </application>

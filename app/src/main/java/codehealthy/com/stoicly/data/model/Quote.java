@@ -1,14 +1,16 @@
 package codehealthy.com.stoicly.data.model;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 public class Quote {
-
+    public static final boolean DEFAULT_READ_STATUS      = false;
+    public static final boolean DEFAULT_FAVOURITE_STATUS = false;
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private             int     id;
 
     @ColumnInfo(name = "quote")
     private String quote;
@@ -19,21 +21,19 @@ public class Quote {
     @ColumnInfo(name = "category_id")
     private int categoryId;
 
-    @ColumnInfo(name = "is_read")
-    private boolean isRead;
+    @Embedded
+    private QuoteStatus quoteStatus;
 
+    @ColumnInfo(name = "source")
+    private String source;
 
-    @ColumnInfo(name = "is_favourite")
-    private boolean isFavourite;
-
-    public Quote(String quote, int authorId, int categoryId, boolean isRead, boolean isFavourite) {
+    public Quote(String quote, int authorId, int categoryId, QuoteStatus quoteStatus, String source) {
         this.quote = quote;
         this.authorId = authorId;
         this.categoryId = categoryId;
-        this.isFavourite = isFavourite;
-        this.isRead = isRead;
+        this.source = source;
+        this.quoteStatus = quoteStatus;
     }
-
 
     public int getId() {
         return id;
@@ -55,23 +55,19 @@ public class Quote {
         return categoryId;
     }
 
-    public boolean isRead() {
-        return isRead;
+    public QuoteStatus getQuoteStatus() {
+        return quoteStatus;
     }
 
-    public boolean isFavourite() {
-        return isFavourite;
+    public void setQuoteStatus(QuoteStatus quoteStatus) {
+        this.quoteStatus = quoteStatus;
     }
 
-    public void setFavourite(boolean isFavourite) {
-        this.isFavourite = isFavourite;
+    public String getSource() {
+        return source;
     }
 
+    public void setSource(String source) {
+        this.source = source;
+    }
 }
-
-
-
-
-
-
-

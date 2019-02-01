@@ -7,16 +7,21 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import codehealthy.com.stoicly.data.model.Author;
+import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
 import codehealthy.com.stoicly.data.source.local.AuthorDao;
 
 public class AuthorRepositoryImpl implements AuthorRepository {
-    private AuthorDao authorDao;
+    private AuthorDao                       authorDao;
+    private int                             authorId;
+    private LiveData<List<Author>>          allAuthors;
+    private LiveData<List<QuoteAuthorJoin>> allQuotesByAuthor;
 
-    private LiveData<List<Author>> allAuthors;
-
-    public AuthorRepositoryImpl(Application application) {
+    public AuthorRepositoryImpl(Application application, int authorId) {
         authorDao = AppDatabase.getInstance(application).authorDao();
         allAuthors = authorDao.getAllAuthors();
+        this.authorId = authorId;
+        allQuotesByAuthor = authorDao.getAllQuotesByAuthor(authorId);
+
     }
 
     public LiveData<List<Author>> getAllAuthors() {
@@ -41,9 +46,20 @@ public class AuthorRepositoryImpl implements AuthorRepository {
     }
 
     @Override
-    public void getAuthorById(int AuthorId) {
-        new GetAuthorByIdAsyncTask(authorDao).execute();
+    public void getAuthor(int AuthorId) {
+
     }
+
+    @Override
+    public LiveData<List<QuoteAuthorJoin>> getAllQuotesByAuthor(int authorId) {
+        return allQuotesByAuthor;
+    }
+
+    @Override
+    public LiveData<Author> getAuthorById(int authorId) {
+        return null;
+    }
+
 
     private static class InsertAuthorAsyncTask extends AsyncTask<Author, Void, Void> {
         private AuthorDao authorDao;
@@ -85,26 +101,6 @@ public class AuthorRepositoryImpl implements AuthorRepository {
         protected Void doInBackground(Author... authors) {
             authorDao.deleteAuthor(authors);
             return null;
-        }
-    }
-
-    private static class GetAuthorByIdAsyncTask extends AsyncTask<Integer, Void, Author> {
-        private AuthorDao authorDao;
-
-        private GetAuthorByIdAsyncTask(AuthorDao authorDao) {
-            this.authorDao = authorDao;
-        }
-
-        @Override
-        protected Author doInBackground(Integer... authorId) {
-            return authorDao.getAuthorById(authorId[0]);
-        }
-
-        @Override
-        protected void onPostExecute(Author author) {
-            super.onPostExecute(author);
-
-
         }
     }
 

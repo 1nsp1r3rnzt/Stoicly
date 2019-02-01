@@ -23,4 +23,4 @@ public class ExampleInstrumentedTest {
 
         assertEquals("codehealthy.com.stoicly", appContext.getPackageName());
     }
-}
+ }

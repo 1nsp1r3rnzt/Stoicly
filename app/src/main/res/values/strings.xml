@@ -11,6 +11,7 @@
     <string name="description_action_button">show favourites</string>
     <string name="exception_adapter_data_null">There are no quotes in adapter. It is null.</string>
     <string name="description_link_author">wikipedia link</string>
+    <string name="description_clipboard_data_copy">Copied to clipboard</string>
     <string-array name="quotes_show_option_array">
         <item>All Quotes</item>
         <item>My Favourite Quotes</item>

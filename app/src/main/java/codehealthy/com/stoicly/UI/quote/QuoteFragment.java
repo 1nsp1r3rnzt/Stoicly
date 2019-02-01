@@ -9,70 +9,89 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import codehealthy.com.stoicly.R;
 import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
 
-public class QuoteActivity extends AppCompatActivity {
+public class QuoteFragment extends Fragment {
     QuoteViewModel        quoteViewModel;
     List<QuoteAuthorJoin> quoteList;
     QuoteAdapter          quoteAdapter;
     RecyclerView          quoteRowView;
     private SwipeRefreshLayout swipeContainer;
     private Handler            handler;
+    private Context            context;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quote);
-        setToolbar();
-        setUpSwipeRefreshListener();
         quoteViewModel = ViewModelProviders.of(this).get(QuoteViewModel.class);
-        quoteRowView = findViewById(R.id.rv_quote);
-        getQuotesFromQuoteViewModel();
-
+        setHasOptionsMenu(true);
     }
 
-    private void setUpSwipeRefreshListener() {
-        swipeContainer = findViewById(R.id.swipe_refresh_quote);
-        swipeContainer.setOnRefreshListener(() ->
-                getHandler().post(this::refreshAllQuotes));
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
-    private Handler getHandler() {
-        if (handler == null) {
-            handler = new Handler();
-        }
-        return handler;
-    }
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_quote, container, false);
 
-    private void refreshAllQuotes() {
-        Collections.shuffle(quoteList);
-        quoteAdapter.notifyDataSetChanged();
-        swipeContainer.setRefreshing(false);
 
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setUpToolbar();
+        quoteRowView = view.findViewById(R.id.rv_quote);
+        getQuotesFromQuoteViewModel();
+        setUpSwipeRefreshListener(view);
 
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        this.context = null;
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        MenuItem searchAction = menu.findItem(R.id.action_search);
+        SearchManager searchManager = (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) searchAction.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(Objects.requireNonNull(getActivity()).getComponentName()));
+
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -88,8 +107,6 @@ public class QuoteActivity extends AppCompatActivity {
                 return false;
             }
         });
-        return super.onCreateOptionsMenu(menu);
-//        inflate the menu
     }
 
     @Override
@@ -99,75 +116,96 @@ public class QuoteActivity extends AppCompatActivity {
         switch (actionId) {
             case (R.id.action_favourite):
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setClass(this, FavouriteQuoteActivity.class);
+                intent.setClass(context, FavouriteQuoteActivity.class);
                 startActivity(intent);
                 break;
         }
-
         return true;
     }
 
-    private void setToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    private void setUpToolbar() {
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+
+        if (getActivity() instanceof AppCompatActivity) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        }
     }
 
-
     private void getQuotesFromQuoteViewModel() {
-
-        quoteViewModel.getAllQuotesWithAuthorName().observe(this, quoteList -> {
+        quoteViewModel.getAllQuotesWithAuthorName().observe(getViewLifecycleOwner(), quoteList -> {
             if (quoteList != null && this.quoteList == null) {
                 this.quoteList = quoteList;
-
-                loadDataInQuoteRView(quoteList);
-
+                setRecyclerViewAndAdapter();
             }
+
         });
     }
 
-
-    private void loadDataInQuoteRView(@NonNull List<QuoteAuthorJoin> quoteList) {
-
+    private void setRecyclerViewAndAdapter() {
         quoteAdapter = new QuoteAdapter(quoteList);
         quoteRowView.setAdapter(quoteAdapter);
-        quoteRowView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        quoteRowView.setLayoutManager(linearLayoutManager);
+        setUpOnItemClickListener();
+    }
 
+    private void setUpSwipeRefreshListener(View view) {
+        swipeContainer = view.findViewById(R.id.swipe_refresh_quote);
+        swipeContainer.setOnRefreshListener(() ->
+                getHandler().post(this::RefreshQuotesAndNotifyDataSet));
+    }
+
+    private Handler getHandler() {
+        if (handler == null) {
+            handler = new Handler();
+        }
+        return handler;
+    }
+
+    private void RefreshQuotesAndNotifyDataSet() {
+        Collections.shuffle(quoteList);
+        quoteAdapter.notifyDataSetChanged();
+        swipeContainer.setRefreshing(false);
+
+    }
+
+    private void setUpOnItemClickListener() {
         quoteAdapter.setOnItemClickListener((quote, position, resourceId) -> {
-
             switch (resourceId) {
                 case R.id.btn_quote_favourite:
                     updateFavouriteQuote(quote);
                     notifyAdapterPositionChanged(position);
                     break;
                 case R.id.btn_quote_share:
-                    shareQuote(position);
+                    shareQuoteByIntent(position);
                     break;
                 case R.id.btn_quote_clipboard:
                     copyToClipboard(position);
                     break;
+                case R.id.ivAuthorThumbnail:
+
+                    break;
+
             }
         });
     }
 
     private void copyToClipboard(int position) {
-        ClipboardManager clipboardManager = (ClipboardManager) this.getSystemService(CLIPBOARD_SERVICE);
+        ClipboardManager clipboardManager = (ClipboardManager) Objects.requireNonNull(getActivity()).getSystemService(Context.CLIPBOARD_SERVICE);
         QuoteAuthorJoin quote = getQuoteAt(position);
         ClipData clipData = ClipData.newPlainText("quote", quote.getQuote() + "\n" + quote.getAuthorName());
         clipboardManager.setPrimaryClip(clipData);
-        Toast.makeText(this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(context, getString(R.string.description_clipboard_data_copy), Toast.LENGTH_SHORT).show();
     }
 
-    private void shareQuote(int position) {
+    private void shareQuoteByIntent(int position) {
         String authorName = getQuoteAt(position).getAuthorName();
         String quoteText = getQuoteAt(position).getQuote();
         Intent intent = new Intent(Intent.ACTION_SEND);
-
         intent.setType("plain/text");
         intent.putExtra(Intent.EXTRA_TEXT, quoteText + "\n" + authorName);
         Intent chooser = Intent.createChooser(intent, "Share quote to");
         startActivity(chooser);
-
     }
 
     private QuoteAuthorJoin getQuoteAt(int position) {
@@ -176,19 +214,12 @@ public class QuoteActivity extends AppCompatActivity {
 
     private void updateFavouriteQuote(QuoteAuthorJoin quote) {
         int currentQuoteIndex = quoteList.indexOf(quote);
-        if (quote.isFavourite()) quote.setFavourite(false);
-        else quote.setFavourite(true);
-
+        quote.getQuoteStatus().toggleFavourite();
         quoteList.set(currentQuoteIndex, quote);
         quoteViewModel.updateQuote(quote);
     }
 
     private void notifyAdapterPositionChanged(int adapterPosition) {
-        if (quoteAdapter != null) {
-            quoteAdapter.notifyItemChanged(adapterPosition);
-        }
+        if (quoteAdapter != null) quoteAdapter.notifyItemChanged(adapterPosition);
     }
-
-
 }
-

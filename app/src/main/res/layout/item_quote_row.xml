@@ -64,10 +64,10 @@
 
         <android.support.constraint.Group
             android:id="@+id/group_buttons"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="42dp"
+            android:layout_height="88dp"
             android:visibility="visible"
-            app:constraint_referenced_ids="btn_quote_favourite,btn_quote_share,btn_quote_clipboard" />
+            app:constraint_referenced_ids="btn_quote_favourite,btn_quote_share,btn_quote_clipboard,ivAuthorThumbnail" />
 
         <ImageButton
             android:id="@+id/btn_quote_favourite"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="description_btn_fav">Favourite buttonw</string>
+    <string name="description_btn_fav">Favourite button</string>
     <string name="description_btn_share">share button</string>
     <string name="description_quote_btn_copy">copy to clipboard</string>
 

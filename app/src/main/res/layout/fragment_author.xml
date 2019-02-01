@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".UI.author.AuthorActivity">
+    android:layout_height="wrap_content"
+    tools:context=".UI.author.AuthorFragment">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/item_toolbar" />
+    <android.support.constraint.Group
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/iv_author_thumbnail"
@@ -18,7 +18,8 @@
         android:layout_marginTop="@dimen/margin_medium_16"
         android:adjustViewBounds="true"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -61,14 +62,27 @@
 
     <Spinner
         android:id="@+id/sp_quote_fav_or_all"
-        style="@style/Widget.AppCompat.Spinner.DropDown"
-        android:layout_width="match_parent"
+        style="Spinner"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small_8"
         android:entries="@array/quotes_show_option_array"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_bio_description"></Spinner>
+        app:layout_constraintTop_toBottomOf="@id/tv_bio_description"
+
+        />
+
+    <TextView
+        android:id="@+id/tv_total_quotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="viewEnd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/sp_quote_fav_or_all"
+        app:layout_constraintTop_toBottomOf="@id/tv_bio_description"
+        tools:text="@string/demo_author_total_quotes" />
 
     <include
         layout="@layout/item_quote_rv"

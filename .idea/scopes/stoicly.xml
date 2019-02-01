@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="stoicly" pattern="src[app]:codehealthy.com.stoicly.*||src[app]:codehealthy.com.stoicly..*" />
-</component>

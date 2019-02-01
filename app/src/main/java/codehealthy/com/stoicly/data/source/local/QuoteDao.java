@@ -14,6 +14,7 @@ import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
 
 @Dao
 public interface QuoteDao {
+
     @Insert
     void insertQuote(Quote quote);
 
@@ -21,10 +22,10 @@ public interface QuoteDao {
     void updateQuote(Quote quote);
 
 
-    @Query("SELECT quote.*,author.name as author_name  from quote quote LEFT JOIN author ORDER BY RANDOM() ")
+    @Query("SELECT quote.*,author.name as author_name, author.thumbnailUrl as thumbnail_url  from quote quote LEFT JOIN author ON author.id=quote.author_id ORDER BY RANDOM() ")
     LiveData<List<QuoteAuthorJoin>> getAllQuotesWithAuthorName();
 
-    @Query("SELECT quote.*,author.name as author_name  from quote quote LEFT JOIN author where is_favourite = 1 ")
+    @Query("SELECT quote.*,author.name as author_name , author.thumbnailUrl as thumbnail_url  from quote quote LEFT JOIN author ON author.id=quote.author_id where is_favourite = 1 ")
     List<QuoteAuthorJoin> getFavouriteQuotes();
 
     @Query("Select * from quote quote WHERE author_id = :authorId")
