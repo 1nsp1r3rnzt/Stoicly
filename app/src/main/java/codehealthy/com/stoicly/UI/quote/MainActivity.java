@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements QuoteFragment.OnF
 
     private void shareByIntent(@NonNull String text, @NonNull String chooserTitle) {
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("plain/text");
+        intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
         Intent chooser = Intent.createChooser(intent, chooserTitle);
         startActivity(chooser);

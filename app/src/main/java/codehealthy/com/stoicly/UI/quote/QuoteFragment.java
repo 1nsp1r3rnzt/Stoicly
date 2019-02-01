@@ -35,9 +35,9 @@ public class QuoteFragment extends Fragment {
     List<QuoteAuthorJoin> quoteList;
     QuoteAdapter          quoteAdapter;
     RecyclerView          quoteRowView;
-    private SwipeRefreshLayout swipeContainer;
-    private Handler            handler;
-    private Context            context;
+    private SwipeRefreshLayout            swipeContainer;
+    private Handler                       handler;
+    private Context                       context;
     private OnFragmentInteractionListener listener;
 
     @Override
@@ -50,12 +50,9 @@ public class QuoteFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof OnFragmentInteractionListener)
-        {
-        listener = (OnFragmentInteractionListener) context;
-        }
-        else
-        {
+        if (context instanceof OnFragmentInteractionListener) {
+            listener = (OnFragmentInteractionListener) context;
+        } else {
             throw new ClassCastException("Activity must implement OnFragentInteractionListener");
         }
         this.context = context;
@@ -185,10 +182,10 @@ public class QuoteFragment extends Fragment {
                 case R.id.btn_quote_share:
                     String authorName = getQuoteAt(position).getAuthorName();
                     String quoteText = getQuoteAt(position).getQuote();
-                    listener.onShareByIntentListener(authorName+"\n"+quoteText,"Share Quote via");
+                    listener.onShareByIntentListener(quoteText+"\n"+authorName , "Share Quote via");
                     break;
                 case R.id.btn_quote_clipboard:
-                    ClipData clipData  = ClipData.newPlainText("quote", quote.getQuote() + "\n" + quote.getAuthorName());
+                    ClipData clipData = ClipData.newPlainText("quote", quote.getQuote() + "\n" + quote.getAuthorName());
                     listener.onCopyToClipboardListener(clipData);
                     break;
                 case R.id.ivAuthorThumbnail:
@@ -215,8 +212,9 @@ public class QuoteFragment extends Fragment {
     }
 
 
-    interface OnFragmentInteractionListener{
+    interface OnFragmentInteractionListener {
         void onShareByIntentListener(String text, String chooserTitle);
+
         void onCopyToClipboardListener(ClipData clipData);
     }
 }
