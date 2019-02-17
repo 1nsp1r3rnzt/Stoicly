@@ -4,7 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-import codehealthy.com.stoicly.UI.common.utility.MyHelper;
+import codehealthy.com.stoicly.ui.common.utils.UtilityHelper;
 
 @Entity
 public class Author {
@@ -31,11 +31,11 @@ public class Author {
     private String profession;
 
     @ColumnInfo(name = "bio_link")
-    private String bioLink;
+    private String readMoreUrl;
 
 
     public Author(String name, String thumbnailUrl, String bio, String dateBorn, String dateDied, String profession) {
-        this.name = MyHelper.capitalize(name);
+        this.name = UtilityHelper.capitalize(name);
         this.thumbnailUrl = thumbnailUrl;
         this.bio = bio;
         this.dateBorn = dateBorn;
@@ -75,11 +75,11 @@ public class Author {
         return profession;
     }
 
-    public String getBioLink() {
-        return bioLink;
+    public String getReadMoreUrl() {
+        return readMoreUrl;
     }
 
-    public void setBioLink(String bioLink) {
-        this.bioLink = bioLink;
+    public void setReadMoreUrl(String readMoreUrl) {
+        this.readMoreUrl = readMoreUrl;
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.user.UserActivity">
+    tools:context=".ui.user.UserActivity">
 
     <ImageView
         android:id="@+id/iv_user_background"
@@ -13,13 +13,13 @@
         android:background="@drawable/background"
         android:backgroundTint="@color/colorBlack"
         android:backgroundTintMode="multiply"
-        android:contentDescription="@String/image_user_background_description" />
+        android:contentDescription="@string/activity_user_login_background_description" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/size_medium"
-        android:layout_marginStart="@dimen/margin_medium_16"
-        android:layout_marginBottom="@dimen/margin_medium_16"
+        android:layout_height="@dimen/text_size_medium_16"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_medium"
         android:background="@color/colorRed"
         android:text="@string/user_login_button"
         app:layout_constraintBottom_toBottomOf="parent"

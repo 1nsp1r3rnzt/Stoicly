@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4540cb7f130ab07686d39bf8e409efc9",
+    "identityHash": "1d0ff225b3de9d5f1014f0fdd3d21f0b",
     "entities": [
       {
         "tableName": "Quote",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quote` TEXT, `author_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quote` TEXT, `author_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, `source` TEXT, `is_read` INTEGER, `is_favourite` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -31,6 +31,24 @@
             "columnName": "category_id",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "source",
+            "columnName": "source",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "quoteStatus.isRead",
+            "columnName": "is_read",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "quoteStatus.isFavourite",
+            "columnName": "is_favourite",
+            "affinity": "INTEGER",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -44,7 +62,7 @@
       },
       {
         "tableName": "Author",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `thumbnail_id` TEXT, `bio` TEXT, `date_born` TEXT, `date_died` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `thumbnailUrl` TEXT, `bio` TEXT, `date_born` TEXT, `date_died` TEXT, `profession` TEXT, `bio_link` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -59,8 +77,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "thumbnailId",
-            "columnName": "thumbnail_id",
+            "fieldPath": "thumbnailUrl",
+            "columnName": "thumbnailUrl",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -79,6 +97,18 @@
           {
             "fieldPath": "dateDied",
             "columnName": "date_died",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "profession",
+            "columnName": "profession",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "readMoreUrl",
+            "columnName": "bio_link",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -153,11 +183,85 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "QuoteGroup",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`qid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `description` TEXT, `excerpt` TEXT, `group_quotes` TEXT, `group_category` TEXT, `is_hidden` INTEGER NOT NULL, `is_seen` INTEGER NOT NULL, `created_at` TEXT, `background` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "qid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "excerpt",
+            "columnName": "excerpt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "groupQuotes",
+            "columnName": "group_quotes",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "groupCategory",
+            "columnName": "group_category",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isHidden",
+            "columnName": "is_hidden",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isSeen",
+            "columnName": "is_seen",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "backGround",
+            "columnName": "background",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "qid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4540cb7f130ab07686d39bf8e409efc9\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1d0ff225b3de9d5f1014f0fdd3d21f0b\")"
     ]
   }
 }

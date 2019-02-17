@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/materialCardView"
+    style="@style/CardView.Light"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_extra_small"
+    android:layout_marginTop="@dimen/spacing_extra_small"
+    android:layout_marginEnd="@dimen/spacing_extra_small"
+    android:layout_marginBottom="@dimen/spacing_extra_small"
+    android:elevation="6dp"
+    android:orientation="horizontal"
+    android:outlineAmbientShadowColor="?attr/colorSecondary"
+    android:outlineSpotShadowColor="?attr/colorPrimaryDark">
+
+    <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout_quote_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvQuote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/margin_medium_24"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:fontFamily="serif"
+            android:minHeight="@dimen/text_size_quote_min"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="@color/colorBlackDark"
+            app:layout_constraintEnd_toStartOf="@id/ivAuthorThumbnail"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/demo_quote_description"
+
+            />
+
+        <TextView
+            android:id="@+id/tvQuoteSource"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginEnd="8dp"
+            android:paddingStart="@dimen/spacing_extra_small"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            app:layout_constraintEnd_toStartOf="@id/ivAuthorThumbnail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvQuote"
+            tools:text="@string/demo_quote_soure" />
+
+        <TextView
+            android:id="@+id/tvAuthorName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_row_quote"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="?attr/colorPrimaryDark"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvQuoteSource"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ivAuthorThumbnail"
+            app:layout_constraintTop_toBottomOf="@id/ivAuthorThumbnail"
+            tools:text="@tools:sample/full_names" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivAuthorThumbnail"
+            android:layout_width="@dimen/size_author_image"
+            android:layout_height="@dimen/size_author_image"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:contentDescription="@string/author_image_description"
+            android:elevation="4dp"
+            android:transitionName="@string/shared_author_transition"
+            app:civ_border_color="@color/colorGreyAlfa"
+            app:civ_border_overlay="false"
+            app:civ_border_width="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group_buttons"
+            android:layout_width="42dp"
+            android:layout_height="88dp"
+            android:visibility="visible"
+            app:constraint_referenced_ids="btn_quote_favourite,btn_quote_share,btn_quote_clipboard,ivAuthorThumbnail" />
+
+        <ToggleButton
+            android:id="@+id/btn_quote_favourite"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="@dimen/margin_medium_24"
+            android:layout_height="@dimen/margin_medium_24"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:background="@drawable/button_favourite"
+            android:checked="false"
+            android:contentDescription="@string/description_btn_fav"
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuoteSource" />
+
+        <ImageButton
+            android:id="@+id/btn_quote_share"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_extra_small"
+            android:contentDescription="@string/description_btn_share"
+            android:minWidth="0dp"
+            android:paddingStart="@dimen/spacing_extra_small"
+            android:paddingEnd="@dimen/spacing_extra_small"
+            android:textColor="@color/colorBlackDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/btn_quote_favourite"
+
+            app:srcCompat="@drawable/ic_share_black_24dp"
+
+            />
+
+        <ImageButton
+            android:id="@+id/btn_quote_clipboard"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_extra_small"
+            android:contentDescription="@string/description_quote_btn_copy"
+            android:minWidth="0dp"
+            android:paddingStart="@dimen/spacing_extra_small"
+            android:paddingEnd="@dimen/spacing_extra_small"
+            android:textColor="@color/colorBlackDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/btn_quote_share"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuoteSource"
+            app:srcCompat="@drawable/ic_content_copy_black_24dp"
+
+            />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.design.card.MaterialCardView>
+
+
+
+

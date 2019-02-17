@@ -14,7 +14,9 @@ public class QuoteStatus {
         this.isFavourite = isFavourite;
     }
 
-
+    static QuoteStatus newInstance(QuoteStatus quoteStatus) {
+        return new QuoteStatus(quoteStatus.isRead(), quoteStatus.isFavourite());
+    }
     public boolean isRead() {
         return isRead;
     }
@@ -23,11 +25,11 @@ public class QuoteStatus {
         return isFavourite;
     }
 
-    public void setFavourite() {
+    private void setFavourite() {
         this.isFavourite = true;
     }
 
-    public void removeFavourite() {
+    private void removeFavourite() {
         this.isFavourite = false;
     }
 

@@ -1,7 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppBaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar" />
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 
-    <style name="AppTheme" parent="AppBaseTheme" />
+    <style name="MaterialAppTheme" parent="AppBaseTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+    </style>
+
 </resources>

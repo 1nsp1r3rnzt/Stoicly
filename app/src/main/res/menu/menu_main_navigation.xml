@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_navigation_all_authors"
+        android:icon="@drawable/ic_person_outline_black_24dp"
+        android:title="@string/description_navigation_author" />
+
+    <item
+        android:id="@+id/action_navigation_favourite"
+        android:icon="@drawable/ic_favorite_border_black_24dp"
+        android:title="@string/description_navigation_favourite" />
+</menu>

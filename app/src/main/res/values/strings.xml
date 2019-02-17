@@ -10,8 +10,18 @@
     <string name="description_action_search">search</string>
     <string name="description_action_button">show favourites</string>
     <string name="exception_adapter_data_null">There are no quotes in adapter. It is null.</string>
-    <string name="description_link_author">wikipedia link</string>
+    <string name="description_link_author">WIKIPEDIA</string>
     <string name="description_clipboard_data_copy">Copied to clipboard</string>
+    <string name="description_author_read_more_text">READ MORE</string>
+    <string name="description_profession">Philosopher</string>
+    <string name="description_navigation_favourite">Favourite Quotes</string>
+    <string name="description_navigation_author">All Authors</string>
+    <string name="activity_main_drawer_open">Open navigation drawer </string>
+    <string name="activity_main_drawer_close">close navigation drawer </string>
+    <string name="shared_author_transition">shared_author_thumbnail</string>
+    <string name="item_nav_header_title">Stoicly</string>
+    <string name="activity_user_login_background_description">background</string>
+
     <string-array name="quotes_show_option_array">
         <item>All Quotes</item>
         <item>My Favourite Quotes</item>

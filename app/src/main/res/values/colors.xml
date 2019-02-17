@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Material design colors-->
+    <color name="colorPrimary">#673AB7</color>
+    <color name="colorPrimaryDark">#512DA8</color>
+    <color name="colorAccent">#2196F3</color>
+
+    <color name="colorPrimaryLight">#ffff6b</color>
+    <!--other colors-->
     <color name="colorBlack">#666</color>
     <color name="colorRed">#e91e63</color>
     <color name="colorBlackDark">#DE000000</color>
+    <color name="colorGrey">#ff9e40</color>
+    <color name="colorDarkBlack">#222</color>
+    <color name="colorWhite">#fff</color>
+    <color name="colorGreyAlfa">#BBDEFB</color>
+    <color name="colorSecondary">#2196F3</color>
 </resources>

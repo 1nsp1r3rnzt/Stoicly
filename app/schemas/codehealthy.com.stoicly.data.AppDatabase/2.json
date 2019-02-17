@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "cd96729230b91c5c4995e3543c061fa8",
+    "identityHash": "1d0ff225b3de9d5f1014f0fdd3d21f0b",
     "entities": [
       {
         "tableName": "Quote",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quote` TEXT, `author_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, `is_read` INTEGER NOT NULL, `is_favourite` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `quote` TEXT, `author_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, `source` TEXT, `is_read` INTEGER, `is_favourite` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -33,16 +33,22 @@
             "notNull": true
           },
           {
-            "fieldPath": "isRead",
-            "columnName": "is_read",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "source",
+            "columnName": "source",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
-            "fieldPath": "isFavourite",
+            "fieldPath": "quoteStatus.isRead",
+            "columnName": "is_read",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "quoteStatus.isFavourite",
             "columnName": "is_favourite",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -56,7 +62,7 @@
       },
       {
         "tableName": "Author",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `thumbnailUrl` TEXT, `bio` TEXT, `date_born` TEXT, `date_died` TEXT, `profession` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `thumbnailUrl` TEXT, `bio` TEXT, `date_born` TEXT, `date_died` TEXT, `profession` TEXT, `bio_link` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -97,6 +103,12 @@
           {
             "fieldPath": "profession",
             "columnName": "profession",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "readMoreUrl",
+            "columnName": "bio_link",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -249,7 +261,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"cd96729230b91c5c4995e3543c061fa8\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1d0ff225b3de9d5f1014f0fdd3d21f0b\")"
     ]
   }
 }

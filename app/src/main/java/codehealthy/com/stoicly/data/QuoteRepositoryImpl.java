@@ -28,6 +28,7 @@ public class QuoteRepositoryImpl implements QuoteRepository {
     }
 
     public void updateQuote(Quote quote) {
+
         new UpdateQuoteAsyncTask(quoteDao).execute(quote);
     }
 
@@ -53,7 +54,7 @@ public class QuoteRepositoryImpl implements QuoteRepository {
         @Override
         protected Void doInBackground(Quote... quotes) {
 
-            quoteDao.insertQuote(quotes[0]);
+            quoteDao.insertQuote(quotes);
             return null;
         }
     }
@@ -67,6 +68,7 @@ public class QuoteRepositoryImpl implements QuoteRepository {
 
         @Override
         protected Void doInBackground(Quote... quotes) {
+
             quoteDao.deleteQuote(quotes);
             return null;
         }

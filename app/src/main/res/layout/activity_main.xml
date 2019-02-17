@@ -1,49 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".UI.quote.MainActivity">
+<layout>
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/item_toolbar" />
-    <!--<ImageView-->
-    <!--android:id="@+id/iv_random_author_thumbnail"-->
-    <!--android:layout_width="48dp"-->
-    <!--android:layout_height="48dp"-->
-    <!--android:layout_marginStart="@dimen/margin_small_8"-->
-    <!--tools:src="@tools:sample/avatars" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_random_author_description"-->
-    <!--style="@style/TextAppearance.MaterialComponents.Subtitle1"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginStart="@dimen/margin_small_8"-->
-    <!--android:layout_toEndOf="@id/iv_random_author_thumbnail"-->
-    <!--android:text="Random Author" />-->
-    <!--<TextView-->
-    <!--android:id="@+id/tv_random_author_name"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginStart="@dimen/margin_small_8"-->
-    <!--style="@style/TextAppearance.MaterialComponents.Body1"-->
-    <!--android:layout_below="@+id/tv_random_author_description"-->
-    <!--android:layout_marginTop="@dimen/margin_small_8"-->
-    <!--android:layout_toRightOf="@id/iv_random_author_thumbnail"-->
-    <!--android:text="@string/demo_author_name" />-->
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main_drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
-    </FrameLayout>
+        android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.main.MainActivity">
 
+            <include
+                android:id="@+id/appbar_container"
+                layout="@layout/item_appbar" />
+
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/main_navigation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/menu_main_navigation" />
+    </android.support.v4.widget.DrawerLayout>
+
+</layout>
 

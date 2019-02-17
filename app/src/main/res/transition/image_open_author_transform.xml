@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet
+    duration="375"
+    interpolator="@android:interpolator/fast_out_slow_in"
+    transitionOrdering="together">
+    <changeClipBounds />
+    <changeTransform />
+    <changeBounds />
+</transitionSet>

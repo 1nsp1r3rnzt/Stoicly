@@ -5,7 +5,7 @@
      "name": "Epicectus",
      "dateBorn":"55 AD",
      "dateDied":"135 AD",
-     "thumbnailUrl": "epictetus-1.jpg",
+     "thumbnailUrl": "epictetus_1",
      "bio":"He was a Greek Stoic philosopher. He was born a slave at Hierapolis, Phrygia (present day Pamukkale, Turkey) and lived in Rome until his banishment, when he went to Nicopolis in northwestern Greece for the rest of his life. His teachings were written down and published by his pupil Arrian in his Discourses and Enchiridion.",
      "profession":"Greek Philosopher",
      "bio_link":"https://en.wikipedia.org/wiki/Epictetus"
@@ -15,7 +15,7 @@
      "name": "Marcus Aurelius",
      "dateBorn":"26 April 121",
      "dateDied":"17 March 180",
-     "thumbnailUrl": "marcus-aurileus-1.jpg",
+     "thumbnailUrl": "marcus_aurileus_1",
      "bio":"He was Roman emperor from 161 to 180. He ruled the Roman Empire with his adoptive brother, Lucius Verus, until Lucius' death in 169. He was the last of the rulers traditionally known as the Five Good Emperors. He is also seen as the last emperor of the Pax Romana, an age of relative peace and stability for the Empire. Marcus' personal philosophical writings, often called Meditations, are a significant source of the modern understanding of ancient Stoic philosophy, and have been praised by fellow writers, philosophers, and monarchs–as well as by poets and politicians–centuries after his death.",
      "profession":"Philosopher",
      "bio_link":"https://en.wikipedia.org/wiki/Marcus_Aurelius"
@@ -25,7 +25,7 @@
      "name": "Seneca",
      "dateBorn":"4 BC",
      "dateDied":"AD 65",
-     "thumbnailUrl": "Seneca-1.jpg",
+     "thumbnailUrl": "seneca_1",
      "bio":"He was a Roman Stoic philosopher, statesman, dramatist, and—in one work—satirist of the Silver Age of Latin literature. Seneca was born in Córdoba in Hispania, and raised in Rome, where he was trained in rhetoric and philosophy. He was a tutor and later advisor to emperor Nero. He was forced to take his own life for alleged complicity in the Pisonian conspiracy to assassinate Nero, in which he was likely to have been innocent.[1][2] His father was Seneca the Elder, his elder brother was Lucius Junius Gallio Annaeanus, and his nephew was the poet Lucan. His stoic and calm suicide has become the subject of numerous paintings. As a writer Seneca is known for his philosophical works, and for his plays, which are all tragedies. His philosophical writings include a dozen philosophical essays, and one hundred and twenty-four letters dealing with moral issues. As a tragedian, he is best known for his Medea and Thyestes.",
      "profession":"Philosopher",
      "bio_link":"https://en.wikipedia.org/wiki/Seneca_the_Younger"
@@ -36,7 +36,7 @@
      "name": "Zeno of Citium",
      "dateBorn":"c. 334 BC",
      "dateDied":"c. 262 BC",
-     "thumbnailUrl": "zeno-1.jpg",
+     "thumbnailUrl": "zeno_1",
      "bio":"Zeno was a Hellenistic thinker, of Phoenician descent, [3][4] from Citium (Κίτιον, Kition), Cyprus. Zeno was the founder of the Stoic school of philosophy, which he taught in Athens from about 300 BC. Based on the moral ideas of the Cynics, Stoicism laid great emphasis on goodness and peace of mind gained from living a life of Virtue in accordance with Nature. It proved very popular, and flourished as one of the major schools of philosophy from the Hellenistic period through to the Roman era.",
      "profession":"Philosopher",
      "bio_link": "https://en.wikipedia.org/wiki/Zeno_of_Citium"
@@ -48,7 +48,7 @@
      "name": "Cato (Marcus Porcius Cato Uticensis)",
      "dateBorn":"95 BC",
      "dateDied":"April 46 BC",
-     "thumbnailUrl": "cato-1.jpg",
+     "thumbnailUrl": "cato_1",
      "bio":"He was Commonly known as Cato the Younger (Cato Minor) to distinguish him from his great-grandfather (Cato the Elder), was a statesman in the late Roman Republic, and a follower of the Stoic philosophy. A noted orator, he is remembered for his stubbornness and tenacity (especially in his lengthy conflict with Julius Caesar), as well as his immunity to bribes, his moral integrity, and his famous distaste for the ubiquitous corruption of the period.",
      "profession":"Philosopher",
      "bio_link":"https://en.wikipedia.org/wiki/Cato_the_Younger"

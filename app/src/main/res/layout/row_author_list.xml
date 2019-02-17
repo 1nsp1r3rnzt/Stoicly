@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="author"
+            type="codehealthy.com.stoicly.data.model.Author" />
+
+
+        <variable
+            name="itemClickListener"
+            type="codehealthy.com.stoicly.ui.author.all.AuthorListAdapter.OnInteractionListener" />
+
+    </data>
+
+    <android.support.design.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        style="@style/CardView.Light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_extra_small"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:layout_marginBottom="@dimen/spacing_extra_small"
+        android:elevation="6dp"
+        android:orientation="vertical"
+        android:outlineAmbientShadowColor="?attr/colorSecondary"
+        android:outlineSpotShadowColor="?attr/colorPrimaryDark">
+
+        <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/layout_quote_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{()->itemClickListener.onAuthorClick(author.getId())}">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_author_list_thumbnail"
+                android:layout_width="@dimen/size_author_image"
+                android:layout_height="@dimen/size_author_image"
+                android:contentDescription="@string/author_image_description"
+                android:elevation="4dp"
+                android:transitionName="@string/shared_author_transition"
+                app:civ_border_color="@color/colorSecondary"
+                app:civ_border_overlay="false"
+                app:civ_border_width="1dp"
+                app:imageFromDrawablePath="@{author.getThumbnailUrl()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:background="?attr/colorSecondary"
+                app:layout_constraintBottom_toBottomOf="@id/tv_author_list_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_author_list_thumbnail"
+
+                />
+
+            <TextView
+                android:id="@+id/tv_author_list_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:padding="@dimen/spacing_extra_small"
+                android:text="@{author.getName()}"
+                android:textColor="@color/colorPrimaryLight"
+                app:layout_constraintEnd_toEndOf="@id/iv_author_list_thumbnail"
+                app:layout_constraintStart_toStartOf="@id/iv_author_list_thumbnail"
+                app:layout_constraintTop_toBottomOf="@id/iv_author_list_thumbnail"
+
+                tools:text="@tools:sample/full_names" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.design.card.MaterialCardView>
+
+
+</layout>

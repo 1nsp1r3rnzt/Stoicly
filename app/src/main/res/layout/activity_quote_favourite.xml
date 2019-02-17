@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--toolbar-->
-    <include layout="@layout/item_toolbar" />
+    <include layout="@layout/item_appbar" />
     <!--favourite quote-->
     <include layout="@layout/item_quote_rv" />
 </android.support.constraint.ConstraintLayout>

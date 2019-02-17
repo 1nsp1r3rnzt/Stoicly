@@ -7,8 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 public class Quote {
-    public static final boolean DEFAULT_READ_STATUS      = false;
-    public static final boolean DEFAULT_FAVOURITE_STATUS = false;
+
     @PrimaryKey(autoGenerate = true)
     private             int     id;
 
@@ -43,6 +42,7 @@ public class Quote {
         this.id = id;
     }
 
+
     public String getQuote() {
         return quote;
     }
@@ -58,7 +58,6 @@ public class Quote {
     public QuoteStatus getQuoteStatus() {
         return quoteStatus;
     }
-
     public void setQuoteStatus(QuoteStatus quoteStatus) {
         this.quoteStatus = quoteStatus;
     }

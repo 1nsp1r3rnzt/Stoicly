@@ -16,9 +16,9 @@ import codehealthy.com.stoicly.data.model.QuoteGroup;
 import codehealthy.com.stoicly.data.model.User;
 import codehealthy.com.stoicly.data.source.local.AuthorDao;
 import codehealthy.com.stoicly.data.source.local.AuthorJsonHelper;
-import codehealthy.com.stoicly.data.source.local.QuoteJsonHelper;
 import codehealthy.com.stoicly.data.source.local.QuoteDao;
 import codehealthy.com.stoicly.data.source.local.QuoteGroupDao;
+import codehealthy.com.stoicly.data.source.local.QuoteJsonHelper;
 import codehealthy.com.stoicly.data.source.local.UserDao;
 import timber.log.Timber;
 
@@ -27,31 +27,33 @@ public abstract class AppDatabase extends RoomDatabase {
     private static      AppDatabase INSTANCE;
     private static final String      QUOTES_JSON_RESOURCE_NAME = "quotes.json";
     private static final String AUTHORS_JSON_RESOURCE_NAME = "authors.json";
-    public AppDatabase() {
+
+    AppDatabase() {
     }
 
-    public static AppDatabase getInstance(final Context context) {
+    static AppDatabase getInstance(final Context context) {
 //        singleton for the instance
+
         if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "quote-database")
+
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "database.db")
                     .addCallback(new RoomDatabase.Callback() {
 
                                      @Override
                                      public void onCreate(@NonNull SupportSQLiteDatabase db) {
                                          super.onCreate(db);
-//            load database with data on creation of the database schema
-                                         populateQuotesDatabase(context);
+
                                          populateAuthorsDatabase(context);
+                                         populateQuotesDatabase(context);
                                      }
                                  }
                     )
                     .fallbackToDestructiveMigration()
                     .build();
-//fallbackToDestructiveMigration destroys and rebuit database.
+//fallbackToDestructiveMigration destroys and rebuiLt database.
         }
         return INSTANCE;
     }
-
     private static void populateQuotesDatabase(@NonNull Context context) {
 
         List<Quote> quotesData;
@@ -64,11 +66,6 @@ public abstract class AppDatabase extends RoomDatabase {
         authorList = new AuthorJsonHelper(context).getListFrom(AUTHORS_JSON_RESOURCE_NAME);
 
         new PopulateAuthorDatabaseAsyncTask(INSTANCE, authorList).execute();
-    }
-
-    public static void destroyInstance() {
-        INSTANCE = null;
-
     }
 
     abstract QuoteDao quoteDao();
