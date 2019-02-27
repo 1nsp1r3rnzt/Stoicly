@@ -27,7 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import codehealthy.com.stoicly.R;
 import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
+import codehealthy.com.stoicly.ui.author.quotelist.QuoteSource;
 import de.hdodenhof.circleimageview.CircleImageView;
+import timber.log.Timber;
 
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> implements Filterable {
     public static final String                BUNDLE_RESOURCE_ID               = "BUNDLE_RESOURCE_ID";
@@ -37,6 +39,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     private             OnItemClickListener   listener;
     private             List<QuoteAuthorJoin> quoteAuthorJoinList;
     private             List<QuoteAuthorJoin> quoteAuthorJoinListFull;
+    private             List<QuoteAuthorJoin> favouriteQuotesList;
 
     public QuoteAdapter(Context context) {
         this.context = context;
@@ -144,21 +147,34 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
     public void setQuoteListItems(final List<QuoteAuthorJoin> newList) {
         if (newList != null) {
-            if (newList.size() != 0) {
-                if (quoteAuthorJoinList == null) {
-                    quoteAuthorJoinList = new ArrayList<>(newList);
-                    quoteAuthorJoinListFull = new ArrayList<>(quoteAuthorJoinList);
-                    notifyItemRangeInserted(0, newList.size());
+            if (quoteAuthorJoinList == null) {
+                quoteAuthorJoinList = new ArrayList<>(newList);
+                quoteAuthorJoinListFull = new ArrayList<>(quoteAuthorJoinList);
+                notifyItemRangeInserted(0, newList.size());
 
-                } else {
+            } else {
 
-                    final QuoteDiffCallback quoteDiffCallback = new QuoteDiffCallback(quoteAuthorJoinListFull, newList);
-                    final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(quoteDiffCallback);
-                    quoteAuthorJoinListFull = newList;
-                    diffResult.dispatchUpdatesTo(this);
-                }
+                final QuoteDiffCallback quoteDiffCallback = new QuoteDiffCallback(quoteAuthorJoinListFull, newList);
+                final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(quoteDiffCallback);
+                quoteAuthorJoinListFull = newList;
+                diffResult.dispatchUpdatesTo(this);
             }
         }
+    }
+
+
+    public void setFavouriteQuoteItems(final List<QuoteAuthorJoin> favQuotes) {
+        if (favQuotes != null) {
+            if (favQuotes.size() != 0) {
+                favouriteQuotesList = favQuotes;
+                notifyDataSetChanged();
+            } else {
+                Timber.d("empty fav list");
+
+            }
+
+        }
+
     }
 
 
@@ -166,27 +182,43 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
         this.listener = onItemClickListener;
     }
 
-    void clear() {
+    public void clear() {
         quoteAuthorJoinList = null;
         notifyDataSetChanged();
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(QuoteAuthorJoin quote, Bundle args);
+
+    public void changeSource(QuoteSource quoteSource) {
+        if (quoteSource.isStatusAllQuotes()) {
+
+            clear();
+            quoteAuthorJoinList = quoteAuthorJoinListFull;
+        } else {
+            clear();
+            quoteAuthorJoinList = favouriteQuotesList;
+
+        }
     }
 
-    public interface OnQuoteFragmentInteractionListener {
+
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, QuoteAuthorJoin quote, Bundle args);
+    }
+
+    public interface OnFragmentInteractionListener {
         void onShareByIntentListener(String text, String chooserTitle);
 
         void onCopyToClipboardListener(ClipData clipData);
 
-        void onAuthorSelectedListener(int authorId, String transitionName);
+        void onAuthorSelectedListener(View itemView, int authorId);
+
+        void setHomeAsNavigationIcon();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tvQuote)
         TextView        quoteTextView;
-        @BindView(R.id.ivAuthorThumbnail)
+        @BindView(R.id.iv_quote_author_thumbnail)
         CircleImageView authorThumbnailImageView;
         @BindView(R.id.tvAuthorName)
         TextView        authorNameTextView;
@@ -204,25 +236,23 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
             super(itemView);
             ButterKnife.bind(this, itemView);
             setUpScaleAnimationOnCLick(favouriteButton);
-            setUpClickListenerForViewInGroup(group);
+            setUpClickListenerForViewsInGroup(group);
         }
 
-        private void setUpClickListenerForViewInGroup(Group group) {
+        private void setUpClickListenerForViewsInGroup(Group group) {
             int groupIds[] = group.getReferencedIds();
             for (int resourceId : groupIds) {
                 View currentView = itemView.findViewById(resourceId);
                 currentView.setOnClickListener(v -> {
-                    //trigger click up to the activity
-                    // check for listener if null
+
                     if (listener != null) {
-                        // check for the position
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             Bundle bundle = new Bundle();
                             bundle.putInt(BUNDLE_QUOTE_POSITION, position);
                             bundle.putInt(BUNDLE_RESOURCE_ID, resourceId);
                             bundle.putString(BUNDLE_SHARED_ELEMENT_TRANSITION, authorThumbnailImageView.getTransitionName());
-                            listener.onItemClick(quote, bundle);
+                            listener.onItemClick(itemView, quote, bundle);
 
                         }
                     }

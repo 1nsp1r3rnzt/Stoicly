@@ -10,4 +10,5 @@
     <dimen name="width_large_120">120dp</dimen>
     <dimen name="margin_row_quote">4dp</dimen>
     <dimen name="text_size_quote_min">80dp</dimen>
+    <dimen name="size_author_bio_image">120dp</dimen>
 </resources>

@@ -1,15 +1,13 @@
 <resources>
-    <string name="app_name">stoicly</string>
+    <string name="app_name">Stoicly</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="author_image_description">author image</string>
     <string name="user_login_button">Login with Google</string>
     <string name="user_skip_login_link">Skip Login</string>
     <string name="action_settings">settings</string>
     <string name="description_action_search">search</string>
     <string name="description_action_button">show favourites</string>
-    <string name="exception_adapter_data_null">There are no quotes in adapter. It is null.</string>
+    <string name="exception_adapter_data_null">No Quotes.</string>
     <string name="description_link_author">WIKIPEDIA</string>
     <string name="description_clipboard_data_copy">Copied to clipboard</string>
     <string name="description_author_read_more_text">READ MORE</string>
@@ -21,6 +19,9 @@
     <string name="shared_author_transition">shared_author_thumbnail</string>
     <string name="item_nav_header_title">Stoicly</string>
     <string name="activity_user_login_background_description">background</string>
+    <string name="author_favourite_empty_list">No Favourites yet !!</string>
+    <string name="favourite_empty_list">no quotes yet</string>
+    <string name="description_author_image">author thumbnail</string>
 
     <string-array name="quotes_show_option_array">
         <item>All Quotes</item>

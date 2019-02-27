@@ -19,3 +19,48 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+#stripping logs from the build
+-assumenosideeffects class android.util.log{
+public static boolean isLoggable(java.lang.String, int);
+public static int v(...);
+public static int d(...);
+public static int i(...);
+}
+
+-assumenosideeffects class timber.log.Timber{
+public static *** v(...);
+public static *** d(...);
+public static *** i(...);
+}
+
+## Android architecture components: Lifecycle
+# LifecycleObserver's empty constructor is considered to be unused by proguard
+-keepclassmembers class * implements android.arch.lifecycle.LifecycleObserver {
+    <init>(...);
+}
+# ViewModel's empty constructor is considered to be unused by proguard
+-keepclassmembers class * extends android.arch.lifecycle.ViewModel {
+    <init>(...);
+}
+# keep Lifecycle State and Event enums values
+-keepclassmembers class android.arch.lifecycle.Lifecycle$State { *; }
+-keepclassmembers class android.arch.lifecycle.Lifecycle$Event { *; }
+# keep methods annotated with @OnLifecycleEvent even if they seem to be unused
+# (Mostly for LiveData.LifecycleBoundObserver.onStateChange(), but who knows)
+-keepclassmembers class * {
+    @android.arch.lifecycle.OnLifecycleEvent *;
+}
+
+-keepclassmembers class * implements android.arch.lifecycle.LifecycleObserver {
+    <init>(...);
+}
+
+-keep class * implements android.arch.lifecycle.LifecycleObserver {
+    <init>(...);
+}
+-keepclassmembers class android.arch.** { *; }
+-keep class android.arch.** { *; }
+-dontwarn android.arch.**
+
+-keep,allowoptimization  class codehealthy.com.stoicly.data.** {*;}

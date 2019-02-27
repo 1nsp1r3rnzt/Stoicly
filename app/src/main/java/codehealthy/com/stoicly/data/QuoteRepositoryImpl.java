@@ -13,14 +13,14 @@ import codehealthy.com.stoicly.data.source.local.QuoteDao;
 public class QuoteRepositoryImpl implements QuoteRepository {
     private final static String                          TAG = QuoteRepositoryImpl.class.getSimpleName();
     private              QuoteDao                        quoteDao;
-    private              LiveData<List<Quote>>           allQuotes;
-    private              LiveData<List<QuoteAuthorJoin>> allQuotesWithAuthor;
+    private              LiveData<List<QuoteAuthorJoin>> allFavouriteQuotes;
+    private              LiveData<List<QuoteAuthorJoin>> allQuotes;
 
     public QuoteRepositoryImpl(Application application) {
         AppDatabase appDatabase = AppDatabase.getInstance(application);
         quoteDao = appDatabase.quoteDao();
-        allQuotesWithAuthor = quoteDao.getAllQuotesWithAuthorName();
-
+        allQuotes = quoteDao.getAllQuotesWithAuthorName();
+        allFavouriteQuotes = quoteDao.getFavouriteQuotes();
     }
 
     public void insertQuote(Quote quote) {
@@ -36,12 +36,15 @@ public class QuoteRepositoryImpl implements QuoteRepository {
         new DeleteQuoteAsyncTask(quoteDao).execute(quote);
     }
 
-    public LiveData<List<Quote>> getAllQuotes() {
-        return allQuotes;
+    @Override
+    public LiveData<List<QuoteAuthorJoin>> getAllFavouriteQuotes() {
+        return allFavouriteQuotes;
     }
 
+
+    @Override
     public LiveData<List<QuoteAuthorJoin>> getAllQuotesWithAuthorName() {
-        return allQuotesWithAuthor;
+        return allQuotes;
     }
 
     private static class InsertQuoteAsyncTask extends AsyncTask<Quote, Void, Void> {

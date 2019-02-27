@@ -26,7 +26,7 @@ public interface QuoteDao {
     LiveData<List<QuoteAuthorJoin>> getAllQuotesWithAuthorName();
 
     @Query("SELECT quote.*,author.name as author_name , author.thumbnailUrl as thumbnail_url  from quote quote LEFT JOIN author ON author.id=quote.author_id where is_favourite = 1 ")
-    List<QuoteAuthorJoin> getFavouriteQuotes();
+    LiveData<List<QuoteAuthorJoin>> getFavouriteQuotes();
 
     @Query("Select * from quote quote WHERE author_id = :authorId")
     LiveData<List<Quote>> getQuotesByAuthor(int authorId);

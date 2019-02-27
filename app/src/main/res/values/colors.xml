@@ -10,7 +10,8 @@
     <color name="colorBlack">#666</color>
     <color name="colorRed">#e91e63</color>
     <color name="colorBlackDark">#DE000000</color>
-    <color name="colorGrey">#ff9e40</color>
+    <color name="colorOrange">#ff9e40</color>
+    <color name="colorGrey">#E9E9E9</color>
     <color name="colorDarkBlack">#222</color>
     <color name="colorWhite">#fff</color>
     <color name="colorGreyAlfa">#BBDEFB</color>

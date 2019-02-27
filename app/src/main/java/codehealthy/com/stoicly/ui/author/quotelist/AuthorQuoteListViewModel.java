@@ -16,16 +16,19 @@ import codehealthy.com.stoicly.data.model.Quote;
 import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
 
 public class AuthorQuoteListViewModel extends AndroidViewModel {
-    private LiveData<List<QuoteAuthorJoin>> allQuoteByAuthorList;
-    private LiveData<Author>                author;
-    private QuoteRepository                 quoteRepository;
+
+    private final LiveData<List<QuoteAuthorJoin>> allFavouriteQuotes;
+    private final LiveData<List<QuoteAuthorJoin>> allQuoteByAuthorList;
+    private       LiveData<Author>                author;
+    private       QuoteRepository                 quoteRepository;
 
     AuthorQuoteListViewModel(@NonNull Application application, int authorId) {
         super(application);
         AuthorRepository authorRepository = new AuthorRepositoryImpl(getApplication(), authorId);
         quoteRepository = new QuoteRepositoryImpl(application);
         this.author = authorRepository.getAuthorById(authorId);
-        this.allQuoteByAuthorList = authorRepository.getAllQuotesByAuthor(authorId);
+        this.allFavouriteQuotes = authorRepository.getFavouriteQuotesOfAuthor(authorId);
+        allQuoteByAuthorList = authorRepository.getAllQuotesByAuthor(authorId);
     }
 
     public LiveData<List<QuoteAuthorJoin>> getAllQuoteByAuthorList() {
@@ -38,6 +41,10 @@ public class AuthorQuoteListViewModel extends AndroidViewModel {
 
     void updateQuote(Quote quote) {
         quoteRepository.updateQuote(quote);
+    }
+
+    public LiveData<List<QuoteAuthorJoin>> getAllFavouriteQuotes() {
+        return allFavouriteQuotes;
     }
 
 

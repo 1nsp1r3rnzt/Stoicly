@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/empty_rv_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_author"
+        android:layout_width="@dimen/width_large_120"
+        android:layout_height="@dimen/width_large_120"
+        android:layout_marginStart="@dimen/text_size_medium_16"
+        android:layout_marginTop="170dp"
+        android:contentDescription="@string/description_author_image"
+        android:src="@drawable/ic_philosopher"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_30_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".27" />
+
+    <ImageView
+        android:id="@+id/iv_quote_box"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:contentDescription="@string/favourite_empty_list"
+        android:src="@drawable/ic_quote"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_30_vertical"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_no_quotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="45dp"
+        android:text="@string/author_favourite_empty_list"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/iv_quote_box"
+        app:layout_constraintTop_toTopOf="@id/iv_quote_box" />
+
+</android.support.constraint.ConstraintLayout>

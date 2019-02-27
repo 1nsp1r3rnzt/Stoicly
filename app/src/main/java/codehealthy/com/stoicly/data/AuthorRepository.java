@@ -12,5 +12,7 @@ public interface AuthorRepository {
     LiveData<Author> getAuthorById(int authorId);
 
     LiveData<List<Author>> getAllAuthors();
+
+    LiveData<List<QuoteAuthorJoin>> getFavouriteQuotesOfAuthor(int authorId);
 }
 

@@ -14,7 +14,6 @@ public interface QuoteRepository {
 
     void deleteQuote(Quote quote);
 
-    LiveData<List<Quote>> getAllQuotes();
-
+    LiveData<List<QuoteAuthorJoin>> getAllFavouriteQuotes();
     LiveData<List<QuoteAuthorJoin>> getAllQuotesWithAuthorName();
 }

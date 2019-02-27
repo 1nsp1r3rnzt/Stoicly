@@ -20,17 +20,17 @@ import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
 import timber.log.Timber;
 
 public class QuoteViewModel extends AndroidViewModel {
-    List<QuoteAuthorJoin> allquotes;
+    private List<QuoteAuthorJoin>                  allquotes;
     private QuoteRepository                        repository;
     private LiveData<List<QuoteAuthorJoin>>        allQuotesWithAuthorName;
     private MutableLiveData<List<QuoteAuthorJoin>> randomizedQuotes;
-    private int                                    rotationDistanceForList;
+    private int                                    randomNumber;
 
     public QuoteViewModel(@NonNull Application application) {
         super(application);
         repository = new QuoteRepositoryImpl(application);
-        if (rotationDistanceForList == 0) {
-            rotationDistanceForList = getRandomNumber();
+        if (randomNumber == 0) {
+            randomNumber = getRandomNumber();
         }
 
         randomizedQuotes = new MutableLiveData<>();
@@ -44,28 +44,23 @@ public class QuoteViewModel extends AndroidViewModel {
 
     }
 
-
     void updateQuote(Quote quote) {
         repository.updateQuote(quote);
     }
 
-
     private LiveData<List<QuoteAuthorJoin>> shuffleQuotes(List<QuoteAuthorJoin> quoteAuthorJoin) {
         allquotes = new ArrayList<>(quoteAuthorJoin);
-        Collections.shuffle(quoteAuthorJoin, new Random(rotationDistanceForList));
+        Collections.shuffle(quoteAuthorJoin, new Random(randomNumber));
         randomizedQuotes.postValue(quoteAuthorJoin);
-        Timber.e("random %s", rotationDistanceForList);
+        Timber.e("random %s", randomNumber);
         return randomizedQuotes;
     }
-
-
     void getRandomQuotes() {
-        rotationDistanceForList = getRandomNumber();
+        randomNumber = getRandomNumber();
         List<QuoteAuthorJoin> quotesCopy = new ArrayList<>(allquotes);
-        Collections.shuffle(quotesCopy, new Random(rotationDistanceForList));
+        Collections.shuffle(quotesCopy, new Random(randomNumber));
         randomizedQuotes.postValue(quotesCopy);
     }
-
     LiveData<List<QuoteAuthorJoin>> getAllQuotesWithAuthorName() {
         return allQuotesWithAuthorName;
     }

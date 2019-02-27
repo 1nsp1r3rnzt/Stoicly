@@ -13,6 +13,7 @@ public class AuthorRepositoryImpl implements AuthorRepository {
     private LiveData<Author>                author;
     private LiveData<List<QuoteAuthorJoin>> allQuotesByAuthor;
     private LiveData<List<Author>>          allAuthorList;
+    private LiveData<List<QuoteAuthorJoin>> favouriteQuoteAuthorList;
 
 
     public AuthorRepositoryImpl(Application application, int authorId) {
@@ -20,6 +21,7 @@ public class AuthorRepositoryImpl implements AuthorRepository {
         allQuotesByAuthor = authorDao.getAllQuotesByAuthor(authorId);
         if (authorId > 0) {
             author = authorDao.getAuthorById(authorId);
+            favouriteQuoteAuthorList = authorDao.getFavouriteQuotesByAuthor(authorId);
         }
         allAuthorList = authorDao.getAllAuthors();
     }
@@ -37,6 +39,11 @@ public class AuthorRepositoryImpl implements AuthorRepository {
     @Override
     public LiveData<List<Author>> getAllAuthors() {
         return allAuthorList;
+    }
+
+    @Override
+    public LiveData<List<QuoteAuthorJoin>> getFavouriteQuotesOfAuthor(int authorId) {
+        return favouriteQuoteAuthorList;
     }
 
 }

@@ -28,4 +28,6 @@ public interface AuthorDao {
     void insertAuthor(Author... author);
 
 
+    @Query("SELECT  quote.*,author.name as author_name, author.thumbnailUrl as thumbnail_url from quote quote LEFT OUTER JOIN author ON author.id=quote.author_id where quote.author_id=:authorId AND is_favourite=1")
+    LiveData<List<QuoteAuthorJoin>> getFavouriteQuotesByAuthor(int authorId);
 }

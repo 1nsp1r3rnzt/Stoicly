@@ -1,108 +1,95 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="?attr/actionBarSize"
-    android:background="?attr/colorPrimary">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/iv_author_thumbnail"
-        android:layout_width="@dimen/size_author_image"
-        android:layout_height="@dimen/size_author_image"
-        android:layout_marginTop="@dimen/margin_medium_24"
-        app:civ_border_color="?attr/colorPrimaryDark"
-        app:civ_border_width="1dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tv_author_date_born"
-        style="@style/TextAppearance.MaterialComponents.Headline5"
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_extra_small"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@id/tv_author_name"
-        app:layout_constraintStart_toStartOf="@id/tv_author_name"
-        app:layout_constraintTop_toBottomOf="@+id/iv_author_thumbnail"
-        tools:text="@tools:sample/date/ddmmyy" />
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/colorOrange">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/iv_author_thumbnail"
+            android:layout_width="@dimen/size_author_bio_image"
+            android:layout_height="@dimen/size_author_bio_image"
+            android:layout_marginTop="@dimen/margin_medium_24"
+            app:civ_border_color="?attr/colorPrimaryDark"
+            app:civ_border_width="1dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tv_author_date"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_author_name"
+            app:layout_constraintStart_toStartOf="@id/tv_author_name"
+            app:layout_constraintTop_toBottomOf="@+id/iv_author_thumbnail"
+            tools:text="@tools:sample/date/ddmmyy" />
 
 
-    <TextView
-        android:id="@+id/tv_author_name"
-        style="@style/TextAppearance.MaterialComponents.Headline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_extra_small"
-        android:text="@string/demo_author_name"
-        app:layout_constraintEnd_toEndOf="@id/iv_author_thumbnail"
-        app:layout_constraintHorizontal_bias=".50"
-        app:layout_constraintStart_toStartOf="@id/iv_author_thumbnail"
-        app:layout_constraintTop_toBottomOf="@id/tv_author_date_born" />
+        <TextView
+            android:id="@+id/tv_author_name"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_extra_small"
+            android:text="@string/demo_author_name"
+            app:layout_constraintEnd_toEndOf="@id/iv_author_thumbnail"
+            app:layout_constraintHorizontal_bias=".50"
+            app:layout_constraintStart_toStartOf="@id/iv_author_thumbnail"
+            app:layout_constraintTop_toBottomOf="@id/tv_author_date" />
+
+        <TextView
+            android:id="@+id/tv_author_bio"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:layout_marginEnd="@dimen/spacing_extra_small"
+            android:ellipsize="end"
+            android:paddingBottom="@dimen/spacing_medium"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_author_name"
+            tools:text="@string/demo_author_bio_description" />
+
+        <TextView
+            android:id="@+id/tv_author_read_more_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/text_size_medium_16"
+            android:autoLink="web"
+            android:contentDescription="@string/description_link_author"
+            android:paddingBottom="@dimen/spacing_medium"
+            android:text="@string/description_author_read_more_text"
+            android:textColor="@color/colorSecondary"
+            android:textColorLink="@color/colorRed"
+            android:textSize="@dimen/text_size_medium_16"
+            app:layout_constraintStart_toStartOf="@id/guideline_author_vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_author_bio" />
 
 
-    <TextView
-        android:id="@+id/tv_author_bio"
-        style="@style/TextAppearance.MaterialComponents.Body1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_medium"
-        android:layout_marginTop="@dimen/spacing_extra_small"
-        android:layout_marginEnd="@dimen/spacing_extra_small"
-        android:ellipsize="end"
-        android:paddingBottom="@dimen/spacing_medium"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_author_name"
-        tools:text="@string/demo_author_bio_description" />
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_30_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25" />
 
-    <TextView
-        android:id="@+id/tv_author_read_more_url"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:contentDescription="@string/description_link_author"
-        android:paddingBottom="30dp"
-        android:text="@string/demo_author_wikipedia_link"
-        android:textColor="@color/colorRed"
-        android:textColorLink="@color/colorRed"
-        android:textSize="@dimen/text_size_medium_16"
-        app:layout_constraintStart_toStartOf="@id/guideline_30_vertical"
-        app:layout_constraintTop_toBottomOf="@id/tv_author_bio" />
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_author_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="279dp" />
 
-    <TextView
-        android:id="@+id/tv_author_read_more_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_medium"
-        android:contentDescription="@string/description_author_read_more_text"
-        android:text="@string/description_author_read_more_text"
-        android:textColor="?attr/colorPrimaryDark"
-        android:textColorLink="?attr/colorPrimaryDark"
-        android:textSize="@dimen/text_size_medium_16"
-        app:layout_constraintBaseline_toBaselineOf="@id/tv_author_read_more_url"
-        app:layout_constraintBottom_toBottomOf="@id/tv_author_bio"
-        app:layout_constraintStart_toEndOf="@id/tv_author_read_more_url"
-        app:layout_constraintTop_toBottomOf="@id/iv_author_thumbnail"
-        app:layout_goneMarginBottom="@dimen/spacing_medium" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_30_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.25" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_author_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.32" />
-
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>

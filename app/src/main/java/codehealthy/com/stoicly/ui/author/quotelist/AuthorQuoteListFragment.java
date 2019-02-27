@@ -3,6 +3,7 @@ package codehealthy.com.stoicly.ui.author.quotelist;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ClipData;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,34 +13,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.AdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import codehealthy.com.stoicly.R;
 import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
+import codehealthy.com.stoicly.databinding.FragmentQuoteAuthorBinding;
 import codehealthy.com.stoicly.ui.allquote.QuoteAdapter;
+import codehealthy.com.stoicly.ui.allquote.RecyclerViewEmptyObserver;
 import codehealthy.com.stoicly.ui.main.LinearLayoutManagerWrapper;
 import timber.log.Timber;
 
 public class AuthorQuoteListFragment extends Fragment implements QuoteAdapter.OnItemClickListener {
     private static final String KEY_ARGUMENT_AUTHOR_ID = "KEY_AUTHOR_ID";
-    @BindView(R.id.tv_total_quotes)
-    TextView totalQuotes;
-    @BindView(R.id.sp_quote_fav_or_all)
-    Spinner  quoteSpinnerFavouriteOrAll;
-    private int                                             authorId;
-    private AuthorQuoteListViewModel                        authorQuoteListViewModel;
-    private RecyclerView                                    authorQuotesRV;
-    private QuoteAdapter.OnQuoteFragmentInteractionListener interactionListener;
-    private QuoteAdapter                                    quoteAdapter;
-    private Unbinder                                        unbinder;
+
+    private int                                        authorId;
+    private AuthorQuoteListViewModel                   authorQuoteListViewModel;
+    private QuoteAdapter.OnFragmentInteractionListener interactionListener;
+    private QuoteAdapter                               quoteAdapter;
+    private FragmentQuoteAuthorBinding                 binding;
 
     public static AuthorQuoteListFragment newInstance(int authorId) {
         AuthorQuoteListFragment authorQuoteListFragment = new AuthorQuoteListFragment();
@@ -53,8 +48,8 @@ public class AuthorQuoteListFragment extends Fragment implements QuoteAdapter.On
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof QuoteAdapter.OnQuoteFragmentInteractionListener) {
-            interactionListener = (QuoteAdapter.OnQuoteFragmentInteractionListener) context;
+        if (context instanceof QuoteAdapter.OnFragmentInteractionListener) {
+            interactionListener = (QuoteAdapter.OnFragmentInteractionListener) context;
         }
     }
 
@@ -67,27 +62,46 @@ public class AuthorQuoteListFragment extends Fragment implements QuoteAdapter.On
         if (authorId == ID_ZERO) {
             throw new IllegalStateException("Author id must be passed to AuthorQuoteListFragment.");
         }
-
-
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_author, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_quote_author, container, false);
+        return binding.getRoot();
     }
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        authorQuotesRV = view.findViewById(R.id.rv_quote);
+        RecyclerView authorQuotesRV = binding.itemQuoteRvContainer.rvQuote;
+        View emptyView = binding.emptyRvContainer;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManagerWrapper(getContext(), LinearLayoutManager.VERTICAL, false);
         quoteAdapter = new QuoteAdapter(getContext());
+        quoteAdapter.registerAdapterDataObserver(new RecyclerViewEmptyObserver(emptyView, authorQuotesRV));
         authorQuotesRV.setAdapter(quoteAdapter);
         authorQuotesRV.setLayoutManager(linearLayoutManager);
+
+        binding.spQuoteFavOrAll.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedQuoteSource = parent.getItemAtPosition(position).toString();
+                if (selectedQuoteSource.equals("All Quotes")) {
+                    QuoteSource quoteSource = new QuoteSource("All Quotes");
+                    quoteAdapter.changeSource(quoteSource);
+                } else {
+                    QuoteSource quoteSource = new QuoteSource("Favourite Quotes");
+                    quoteAdapter.changeSource(quoteSource);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -97,13 +111,14 @@ public class AuthorQuoteListFragment extends Fragment implements QuoteAdapter.On
         AuthorViewModelFactory authorViewModelFactory = new AuthorViewModelFactory(Objects.requireNonNull(getActivity()).getApplication(), authorId);
         authorQuoteListViewModel = ViewModelProviders.of(this, authorViewModelFactory).get(AuthorQuoteListViewModel.class);
         getAllQuotesByAuthorFromViewModel();
+        getFavouriteQuotesOfAuthor();
 
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
 
     }
 
@@ -114,7 +129,7 @@ public class AuthorQuoteListFragment extends Fragment implements QuoteAdapter.On
     }
 
     @Override
-    public void onItemClick(QuoteAuthorJoin quote, Bundle args) {
+    public void onItemClick(View itemView, QuoteAuthorJoin quote, Bundle args) {
         String quoteName = quote.getAuthorName();
         String quoteText = quote.getQuote();
         int resourceId = args.getInt(QuoteAdapter.BUNDLE_RESOURCE_ID);
@@ -135,8 +150,18 @@ public class AuthorQuoteListFragment extends Fragment implements QuoteAdapter.On
         }
     }
 
+    //region liveDataObservers
     private void getAllQuotesByAuthorFromViewModel() {
         authorQuoteListViewModel.getAllQuoteByAuthorList().observe(getViewLifecycleOwner(), this::setUpQuoteAdapter);
+    }
+
+    private void getFavouriteQuotesOfAuthor() {
+        authorQuoteListViewModel.getAllFavouriteQuotes().observe(getViewLifecycleOwner(), this::setUpFavouriteQuoteListItems);
+    }
+    //endregion liveDataObservers
+
+    private void setUpFavouriteQuoteListItems(List<QuoteAuthorJoin> quoteAuthorJoins) {
+        quoteAdapter.setFavouriteQuoteItems(quoteAuthorJoins);
     }
 
     private void setUpQuoteAdapter(List<QuoteAuthorJoin> allAuthorsList) {
@@ -147,6 +172,7 @@ public class AuthorQuoteListFragment extends Fragment implements QuoteAdapter.On
         List<QuoteAuthorJoin> newList = new ArrayList<>(allAuthorsList.size());
         for (QuoteAuthorJoin quote : allAuthorsList) {
             newList.add(QuoteAuthorJoin.newInstance(quote));
+
         }
         quoteAdapter.setQuoteListItems(newList);
 
@@ -165,4 +191,5 @@ public class AuthorQuoteListFragment extends Fragment implements QuoteAdapter.On
     private void notifyAdapterPositionChanged(int adapterPosition) {
         if (quoteAdapter != null) quoteAdapter.notifyItemChanged(adapterPosition);
     }
+
 }

@@ -11,7 +11,6 @@
     android:layout_marginEnd="@dimen/spacing_extra_small"
     android:layout_marginBottom="@dimen/spacing_extra_small"
     android:elevation="6dp"
-    android:orientation="horizontal"
     android:outlineAmbientShadowColor="?attr/colorSecondary"
     android:outlineSpotShadowColor="?attr/colorPrimaryDark">
 
@@ -31,7 +30,7 @@
             android:minHeight="@dimen/text_size_quote_min"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="@color/colorBlackDark"
-            app:layout_constraintEnd_toStartOf="@id/ivAuthorThumbnail"
+            app:layout_constraintEnd_toStartOf="@id/iv_quote_author_thumbnail"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -46,8 +45,9 @@
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginEnd="8dp"
             android:paddingStart="@dimen/spacing_extra_small"
+            android:paddingEnd="@dimen/spacing_extra_small"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            app:layout_constraintEnd_toStartOf="@id/ivAuthorThumbnail"
+            app:layout_constraintEnd_toStartOf="@id/iv_quote_author_thumbnail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvQuote"
             tools:text="@string/demo_quote_soure" />
@@ -61,13 +61,13 @@
             android:textColor="?attr/colorPrimaryDark"
             app:layout_constraintBaseline_toBaselineOf="@id/tvQuoteSource"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/ivAuthorThumbnail"
-            app:layout_constraintTop_toBottomOf="@id/ivAuthorThumbnail"
+            app:layout_constraintStart_toStartOf="@id/iv_quote_author_thumbnail"
+            app:layout_constraintTop_toBottomOf="@id/iv_quote_author_thumbnail"
             tools:text="@tools:sample/full_names" />
 
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ivAuthorThumbnail"
+            android:id="@+id/iv_quote_author_thumbnail"
             android:layout_width="@dimen/size_author_image"
             android:layout_height="@dimen/size_author_image"
             android:layout_marginTop="@dimen/spacing_medium"
@@ -88,7 +88,7 @@
             android:layout_width="42dp"
             android:layout_height="88dp"
             android:visibility="visible"
-            app:constraint_referenced_ids="btn_quote_favourite,btn_quote_share,btn_quote_clipboard,ivAuthorThumbnail" />
+            app:constraint_referenced_ids="btn_quote_favourite,btn_quote_share,btn_quote_clipboard,iv_quote_author_thumbnail" />
 
         <ToggleButton
             android:id="@+id/btn_quote_favourite"
