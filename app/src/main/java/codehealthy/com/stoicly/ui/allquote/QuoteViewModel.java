@@ -17,7 +17,6 @@ import codehealthy.com.stoicly.data.QuoteRepository;
 import codehealthy.com.stoicly.data.QuoteRepositoryImpl;
 import codehealthy.com.stoicly.data.model.Quote;
 import codehealthy.com.stoicly.data.model.QuoteAuthorJoin;
-import timber.log.Timber;
 
 public class QuoteViewModel extends AndroidViewModel {
     private List<QuoteAuthorJoin>                  allquotes;
@@ -52,7 +51,6 @@ public class QuoteViewModel extends AndroidViewModel {
         allquotes = new ArrayList<>(quoteAuthorJoin);
         Collections.shuffle(quoteAuthorJoin, new Random(randomNumber));
         randomizedQuotes.postValue(quoteAuthorJoin);
-        Timber.e("random %s", randomNumber);
         return randomizedQuotes;
     }
     void getRandomQuotes() {

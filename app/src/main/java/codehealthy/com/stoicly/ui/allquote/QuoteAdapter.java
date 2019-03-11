@@ -169,7 +169,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
                 favouriteQuotesList = favQuotes;
                 notifyDataSetChanged();
             } else {
-                Timber.d("empty fav list");
+                Timber.e("empty fav list");
 
             }
 

@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import timber.log.Timber;
-
 public class DatabaseCopier {
     public static DatabaseCopier get;
 
@@ -35,17 +33,13 @@ public class DatabaseCopier {
                 while ((length = fileInputStream.read(buffer, 0, 8192)) > 0) {
                     outputStream.write(buffer, 0, length);
                 }
-                Timber.e("file copied");
                 outputStream.flush();
                 outputStream.close();
                 fileInputStream.close();
 
             } catch (IOException e) {
-                Timber.e("error occured%s", e.toString());
                 e.printStackTrace();
             }
-        } else {
-            Timber.e("file exists");
         }
     }
 

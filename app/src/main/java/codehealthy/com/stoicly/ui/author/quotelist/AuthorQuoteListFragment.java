@@ -25,7 +25,6 @@ import codehealthy.com.stoicly.databinding.FragmentQuoteAuthorBinding;
 import codehealthy.com.stoicly.ui.allquote.QuoteAdapter;
 import codehealthy.com.stoicly.ui.allquote.RecyclerViewEmptyObserver;
 import codehealthy.com.stoicly.ui.main.LinearLayoutManagerWrapper;
-import timber.log.Timber;
 
 public class AuthorQuoteListFragment extends Fragment implements QuoteAdapter.OnItemClickListener {
     private static final String KEY_ARGUMENT_AUTHOR_ID = "KEY_AUTHOR_ID";
@@ -39,7 +38,6 @@ public class AuthorQuoteListFragment extends Fragment implements QuoteAdapter.On
     public static AuthorQuoteListFragment newInstance(int authorId) {
         AuthorQuoteListFragment authorQuoteListFragment = new AuthorQuoteListFragment();
         Bundle args = new Bundle();
-        Timber.d("%s", authorId);
         args.putInt(KEY_ARGUMENT_AUTHOR_ID, authorId);
         authorQuoteListFragment.setArguments(args);
         return authorQuoteListFragment;
@@ -107,7 +105,6 @@ public class AuthorQuoteListFragment extends Fragment implements QuoteAdapter.On
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
-        Timber.d("%s the author id submitted", authorId);
         AuthorViewModelFactory authorViewModelFactory = new AuthorViewModelFactory(Objects.requireNonNull(getActivity()).getApplication(), authorId);
         authorQuoteListViewModel = ViewModelProviders.of(this, authorViewModelFactory).get(AuthorQuoteListViewModel.class);
         getAllQuotesByAuthorFromViewModel();
