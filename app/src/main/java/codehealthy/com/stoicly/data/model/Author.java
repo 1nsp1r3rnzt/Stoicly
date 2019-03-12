@@ -4,7 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-import codehealthy.com.stoicly.ui.common.utils.UtilityHelper;
+import com.codehealthy.stoicly.ui.common.utils.UtilityHelper;
+
 
 @Entity
 public class Author {
