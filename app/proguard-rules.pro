@@ -63,4 +63,4 @@ public static *** i(...);
 -keep class android.arch.** { *; }
 -dontwarn android.arch.**
 
--keep,allowoptimization  class codehealthy.com.stoicly.data.** {*;}
+-keep,allowoptimization  class com.codehealthy.stoicly.data.** {*;}

@@ -8,12 +8,12 @@
 
         <variable
             name="author"
-            type="codehealthy.com.stoicly.data.model.Author" />
+            type="com.codehealthy.stoicly.data.model.Author" />
 
 
         <variable
             name="itemClickListener"
-            type="codehealthy.com.stoicly.ui.author.all.AuthorListAdapter.OnInteractionListener" />
+            type="com.codehealthy.stoicly.ui.author.all.AuthorListAdapter.OnInteractionListener" />
 
     </data>
 
